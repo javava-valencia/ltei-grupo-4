@@ -1,0 +1,9 @@
+# Archivos del sistema de macOS
+.DS_Store
+
+# Archivos temporales de Word
+~$*
+
+# Archivos personales que no se publican
+Arquitectura - CV.docx
+DESIGN.anterior.md
