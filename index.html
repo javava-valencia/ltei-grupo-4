@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Javier Valencia · Diseñador gráfico</title>
+  <meta name="description" content="CV y portafolio de Javier Valencia, diseñador gráfico. UX/UI, diseño editorial, branding, empaque y fotografía.">
+  <meta name="theme-color" content="#004804">
+  <link rel="icon" type="image/png" href="assets/img/logo-jv-oscuro.png">
+  <link rel="preload" href="assets/fonts/Urbanist-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* ============================================================
+       Tipografías (assets/fonts)
+       ============================================================ */
+    @font-face { font-family: "Urbanist"; src: url("assets/fonts/Urbanist-Light.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+    @font-face { font-family: "Urbanist"; src: url("assets/fonts/Urbanist-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+
+    /* ============================================================
+       Tokens derivados de DESIGN.md
+       ============================================================ */
+    :root {
+      /* colors */
+      --color-primary: #004804;
+      --color-on-primary: #FFF8EB;
+      --color-secondary: #ADF3AF;
+      --color-on-secondary: #004804;
+      --color-tertiary: #FF1542;
+      --color-on-tertiary: #FFF8EB;
+      --color-neutral: #FFF8EB;
+      --color-surface: var(--color-neutral);
+      --color-on-surface: #111111;
+      --color-surface-inverse: var(--color-primary);
+      --color-on-surface-inverse: var(--color-on-primary);
+      --color-surface-soft: #EAF7E4;
+      --color-surface-inverse-soft: #0E6012;
+
+      /* typography */
+      --font-display: "Urbanist", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+
+      /* spacing */
+      --space-unit: 8px;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 64px;
+      --space-button-y: 14px;
+      --space-button-x: 32px;
+      --space-section: 120px;
+      --space-section-tablet: 96px;
+      --space-section-mobile: 64px;
+      --space-container: 1200px;
+      --space-gutter: 24px;
+      --space-header-height: 80px;
+      --space-touch-target: 44px;
+      --space-divider: 2px;
+
+      /* rounded */
+      --rounded-sm: 16px;
+      --rounded-md: 24px;
+      --rounded-full: 9999px;
+
+      /* motion & elevation */
+      --ease: ease-out;
+      --duration: 0.3s;
+      --lift: -6px;
+      --shadow-hover: 0 12px 32px rgba(0, 72, 4, 0.15);
+      --shadow-hover-dark: 0 12px 32px rgba(17, 17, 17, 0.35);
+
+      /* ritmo vertical (mobile first) */
+      --section-pad: var(--space-section-mobile);
+    }
+    @media (min-width: 768px)  { :root { --section-pad: var(--space-section-tablet); } }
+    @media (min-width: 1024px) { :root { --section-pad: var(--space-section); } }
+
+    /* ============================================================
+       Base
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--space-header-height); -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--color-surface); color: var(--color-on-surface);
+      font: 400 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    @media (min-width: 768px) { body { font-size: 18px; } }
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; }
+    ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    [hidden] { display: none !important; }
+
+    :focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; border-radius: var(--rounded-sm); }
+    .on-dark :focus-visible { outline-color: var(--color-secondary); }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .skip-link {
+      position: absolute; left: var(--space-gutter); top: -100px; z-index: 100;
+      background: var(--color-primary); color: var(--color-secondary);
+      padding: var(--space-button-y) var(--space-button-x); border-radius: var(--rounded-full);
+      font: 700 16px/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    .container { width: 100%; max-width: calc(var(--space-container) + 2 * var(--space-gutter)); margin-inline: auto; padding-inline: var(--space-gutter); }
+
+    /* ============================================================
+       Escala tipográfica (DESIGN.md · typography)
+       ============================================================ */
+    .t-display { font: 700 40px/1.1 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-heading { font: 700 32px/1.15 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-sub     { font: 300 28px/1.3 var(--font-display); letter-spacing: 0; }
+    .t-card    { font: 700 22px/1.3 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-body    { font: 400 16px/1.6 var(--font-body); }
+    .t-label   { font: 500 14px/1.4 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase; }
+    .t-meta    { font: 400 14px/1.4 var(--font-body); }
+    @media (min-width: 768px) {
+      .t-display { font-size: 64px; }
+      .t-heading { font-size: 44px; }
+      .t-body    { font-size: 18px; }
+    }
+
+    /* ============================================================
+       Secciones alternadas
+       ============================================================ */
+    .section { padding-block: var(--section-pad); }
+    .section--light { background: var(--color-surface); color: var(--color-on-surface); }
+    .section--dark  { background: var(--color-surface-inverse); color: var(--color-on-surface-inverse); }
+    .section__head { display: grid; gap: var(--space-xs); margin-bottom: var(--space-xl); max-width: 760px; }
+    .section--light .section__title, .section--light .section__sub { color: var(--color-primary); }
+    .section--dark  .section__title, .section--dark  .section__sub { color: var(--color-secondary); }
+
+    /* ============================================================
+       Botones (button-light / button-dark)
+       ============================================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs);
+      min-height: var(--space-touch-target); padding: var(--space-button-y) var(--space-button-x);
+      border: var(--space-divider) solid currentColor; border-radius: var(--rounded-full); background: transparent;
+      font: 700 19px/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+    }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .btn--light { color: var(--color-tertiary); border-color: var(--color-tertiary); }
+    .btn--light:hover { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+    .btn--dark { color: var(--color-secondary); border-color: var(--color-secondary); }
+    .btn--dark:hover { background: var(--color-secondary); color: var(--color-on-secondary); }
+
+    /* ============================================================
+       Logo
+       ============================================================ */
+    .logo { display: block; height: 48px; width: auto; aspect-ratio: 524 / 755; }
+
+    /* ============================================================
+       Header (header / header-on-hero)
+       ============================================================ */
+    .header {
+      position: sticky; top: 0; z-index: 50; height: var(--space-header-height);
+      background: var(--color-surface); color: var(--color-primary);
+      border-bottom: var(--space-divider) solid transparent;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+    }
+    .header.is-scrolled { border-bottom-color: var(--color-surface-soft); }
+    .header__inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .brand { display: inline-flex; align-items: center; gap: var(--space-sm); color: var(--color-primary); text-decoration: none; min-height: var(--space-touch-target); }
+    .brand__logo { position: relative; display: block; height: 44px; aspect-ratio: 524 / 755; flex: none; }
+    .brand__logo .logo { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity var(--duration) var(--ease); }
+    .brand__logo .logo--claro { opacity: 0; }
+
+    .nav__list { display: flex; gap: var(--space-xs); }
+    .nav-link {
+      position: relative; display: inline-flex; align-items: center; min-height: var(--space-touch-target);
+      padding: var(--space-xs); color: var(--color-primary); text-decoration: none;
+      transition: color var(--duration) var(--ease);
+    }
+    .nav-link::after {
+      content: ""; position: absolute; left: var(--space-xs); right: var(--space-xs); bottom: 6px;
+      height: var(--space-divider); border-radius: var(--rounded-full); background: var(--color-tertiary);
+      transform: scaleX(0); transition: transform var(--duration) var(--ease), background-color var(--duration) var(--ease);
+    }
+    .nav-link:hover, .nav-link[aria-current="true"] { color: var(--color-tertiary); }
+    .nav-link[aria-current="true"]::after { transform: scaleX(1); }
+
+    .nav-toggle {
+      display: none; place-items: center; width: var(--space-touch-target); height: var(--space-touch-target);
+      border: var(--space-divider) solid var(--color-tertiary); border-radius: var(--rounded-full);
+      background: transparent; color: var(--color-tertiary); cursor: pointer;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+    }
+    .nav-toggle:hover { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+    .nav-toggle svg { width: 20px; height: 20px; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+    /* Estado sobre el hero: verde fuerte; sin rojo sobre verde */
+    .header.is-on-hero { background: var(--color-surface-inverse); color: var(--color-secondary); border-bottom-color: transparent; }
+    .header.is-on-hero .brand { color: var(--color-secondary); }
+    .header.is-on-hero .brand__logo .logo--claro { opacity: 1; }
+    .header.is-on-hero .brand__logo .logo--oscuro { opacity: 0; }
+    .header.is-on-hero .nav-link { color: var(--color-secondary); }
+    .header.is-on-hero .nav-link:hover, .header.is-on-hero .nav-link[aria-current="true"] { color: var(--color-on-primary); }
+    .header.is-on-hero .nav-link::after { background: var(--color-on-primary); }
+    .header.is-on-hero .nav-toggle { border-color: var(--color-secondary); color: var(--color-secondary); }
+    .header.is-on-hero .nav-toggle:hover { background: var(--color-secondary); color: var(--color-primary); }
+    .header.is-on-hero :focus-visible { outline-color: var(--color-secondary); }
+
+    @media (max-width: 1023px) {
+      .js .nav-toggle { display: grid; }
+      .js .nav {
+        position: fixed; inset: var(--space-header-height) 0 auto 0;
+        background: var(--color-surface); padding: var(--space-sm) var(--space-gutter) var(--space-lg);
+        border-bottom: var(--space-divider) solid var(--color-surface-soft);
+        visibility: hidden; opacity: 0; transform: translateY(-8px);
+        transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease), visibility 0s linear var(--duration);
+      }
+      .js .nav.is-open { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+      .js .header.is-on-hero .nav { background: var(--color-surface-inverse); border-bottom-color: var(--color-surface-inverse-soft); }
+      .js .nav__list { flex-direction: column; gap: 0; }
+      .nav { overflow-x: auto; }
+    }
+
+    /* ============================================================
+       Inicio (hero): pantalla completa, centrado
+       ============================================================ */
+    .hero {
+      background: var(--color-surface-inverse); color: var(--color-on-surface-inverse);
+      min-height: calc(100vh - var(--space-header-height));
+      min-height: calc(100svh - var(--space-header-height));
+      display: grid; place-items: center; text-align: center;
+      padding-block: var(--space-2xl);
+    }
+    .hero__inner { display: grid; justify-items: center; gap: var(--space-md); }
+    .hero__logo { height: 180px; }
+    .hero__title { color: var(--color-secondary); margin-top: var(--space-sm); }
+    .hero__title:focus { outline: none; }
+    .hero__sub { color: var(--color-on-primary); }
+    .hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-sm); margin-top: var(--space-md); }
+    @media (min-width: 768px) { .hero__logo { height: 240px; } }
+
+    /* ============================================================
+       Sobre mí
+       ============================================================ */
+    .about { display: grid; gap: var(--space-xl); align-items: start; }
+    @media (min-width: 1024px) { .about { grid-template-columns: 5fr 7fr; gap: var(--space-2xl); } }
+    .photo { border-radius: var(--rounded-md); overflow: hidden; aspect-ratio: 4 / 5; background: var(--color-surface-soft); max-width: 480px; width: 100%; }
+    .photo > img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+    .photo__fallback { width: 100%; height: 100%; display: grid; place-items: center; color: var(--color-primary); }
+    .photo__fallback .logo { height: 40%; width: auto; }
+    .about__text { display: grid; gap: var(--space-sm); max-width: 680px; }
+    .about__text strong { color: var(--color-primary); font-weight: 500; }
+
+    .info-grid { display: grid; gap: var(--space-md); margin-top: var(--space-2xl); }
+    @media (min-width: 768px)  { .info-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* info-box */
+    .box { background: var(--color-surface-soft); color: var(--color-on-surface); border-radius: var(--rounded-md); padding: var(--space-lg); }
+    .box__title { color: var(--color-primary); margin-bottom: var(--space-md); }
+    .rows { display: grid; gap: var(--space-sm); }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); flex-wrap: wrap; }
+    .row__level { color: var(--color-primary); }
+    .degree { color: var(--color-primary); font-weight: 500; }
+
+    /* level-dot / level-dot-empty */
+    .dots { display: inline-flex; gap: 6px; }
+    .dot { width: 14px; height: 14px; border-radius: var(--rounded-full); background: var(--color-surface-soft); border: var(--space-divider) solid var(--color-primary); }
+    .dot--on { background: var(--color-primary); }
+
+    /* ============================================================
+       Proyectos (card-project-dark)
+       ============================================================ */
+    /* Cuadrícula de proyectos: la última fila incompleta queda centrada */
+    .projects { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); }
+    .projects > li { flex: 0 1 100%; }
+    @media (min-width: 768px)  { .projects > li { flex-basis: calc((100% - var(--space-md)) / 2); } }
+    @media (min-width: 1024px) { .projects > li { flex-basis: calc((100% - 2 * var(--space-md)) / 3); } }
+    .card-project {
+      height: 100%; display: flex; flex-direction: column; gap: var(--space-sm);
+      background: var(--color-surface); color: var(--color-on-surface);
+      border-radius: var(--rounded-md); padding: var(--space-md);
+      transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+    }
+    .card-project:hover, .card-project:focus-within { transform: translateY(var(--lift)); box-shadow: var(--shadow-hover-dark); }
+    .card-project__media { position: relative; border-radius: var(--rounded-sm); overflow: hidden; aspect-ratio: 4 / 3; background: transparent; border: var(--space-divider) solid var(--color-primary); }
+    .card-project__img, .card-project__fallback { width: 100%; height: 100%; transition: transform var(--duration) var(--ease); }
+    .card-project__img { object-fit: contain; padding: var(--space-md); }
+    .card-project__fallback { display: grid; place-items: center; text-align: center; padding: var(--space-md); color: var(--color-primary); font: 700 28px/1.15 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .card-project:hover .card-project__img, .card-project:hover .card-project__fallback,
+    .card-project:focus-within .card-project__img, .card-project:focus-within .card-project__fallback { transform: scale(1.04); }
+    .card-project__category { color: var(--color-primary); margin-top: var(--space-xs); }
+    .card-project__title { color: var(--color-primary); }
+    /* Toda la tarjeta abre la página del proyecto (el enlace se extiende sobre la tarjeta) */
+    .card-project { position: relative; }
+    .card-project__link { color: inherit; text-decoration: none; }
+    .card-project__link::after { content: ""; position: absolute; inset: 0; border-radius: var(--rounded-md); }
+    .card-project__link:focus-visible { outline: none; }
+    .card-project:has(.card-project__link:focus-visible) { outline: 3px solid var(--color-secondary); outline-offset: 4px; }
+    .tag { display: inline-flex; align-items: center; align-self: flex-start; padding: 6px var(--space-sm); border-radius: var(--rounded-full); background: var(--color-primary); color: var(--color-secondary); }
+
+    /* ============================================================
+       Experiencia (card-experience)
+       ============================================================ */
+    .experience { display: grid; gap: var(--space-md); }
+    .card-experience { background: var(--color-surface-soft); border-radius: var(--rounded-md); padding: var(--space-md); display: grid; gap: var(--space-sm); }
+    @media (min-width: 768px) { .card-experience { grid-template-columns: 1fr 2fr; gap: var(--space-lg); padding: var(--space-lg) var(--space-md); } }
+    .card-experience__title { color: var(--color-primary); }
+    .card-experience__place { color: var(--color-primary); font-weight: 500; margin-top: var(--space-xs); }
+    .card-experience__meta { color: var(--color-on-surface); }
+
+    /* ============================================================
+       Contacto (icon-circle / contact-link)
+       ============================================================ */
+    .contact { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px)  { .contact { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .contact { grid-template-columns: repeat(3, 1fr); } }
+    .contact-link {
+      display: flex; align-items: center; gap: var(--space-sm); min-height: var(--space-touch-target);
+      color: var(--color-on-surface-inverse); text-decoration: none; border-radius: var(--rounded-full);
+    }
+    .contact-link__text { display: grid; min-width: 0; }
+    .contact-link__label { color: var(--color-secondary); }
+    .contact-link__value { overflow-wrap: anywhere; }
+    .icon-circle {
+      width: 48px; height: 48px; flex: none; border-radius: var(--rounded-full); display: grid; place-items: center;
+      background: var(--color-secondary); color: var(--color-primary);
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+    }
+    .icon-circle svg { width: 22px; height: 22px; }
+    .contact-link:hover .icon-circle, .contact-link:focus-visible .icon-circle { background: var(--color-on-primary); color: var(--color-primary); }
+
+    /* ============================================================
+       Pie de página (footer)
+       ============================================================ */
+    .footer { background: var(--color-surface); color: var(--color-primary); padding-block: var(--space-2xl); }
+    .footer__inner { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; justify-content: space-between; }
+    .footer__brand { display: flex; align-items: center; gap: var(--space-sm); }
+    .footer__brand .logo { height: 56px; }
+    .footer__meta { color: var(--color-on-surface); }
+
+    /* ============================================================
+       Aparición al hacer scroll
+       ============================================================ */
+    .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    .js .reveal.is-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+      .card-project:hover, .card-project:focus-within { transform: none; }
+    }
+  </style>
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===================== Header ===================== -->
+  <header class="header is-on-hero">
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="Javier Valencia: ir al inicio">
+        <span class="brand__logo" aria-hidden="true">
+          <img class="logo logo--claro" src="assets/img/logo-jv-claro.png" alt="" width="524" height="755">
+          <img class="logo logo--oscuro" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Secciones">
+        <ul class="nav__list" role="list">
+          <li><a class="nav-link t-label" href="#inicio">Inicio</a></li>
+          <li><a class="nav-link t-label" href="#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav-link t-label" href="#proyectos">Proyectos</a></li>
+          <li><a class="nav-link t-label" href="#experiencia">Experiencia</a></li>
+          <li><a class="nav-link t-label" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- ===================== Inicio ===================== -->
+    <section class="hero on-dark" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <img class="logo hero__logo reveal" src="assets/img/logo-jv-claro.png" alt="Logotipo jv" width="524" height="755">
+        <h1 class="t-display hero__title reveal" id="hero-title" tabindex="-1">Javier Valencia</h1>
+        <p class="t-sub hero__sub reveal">Diseñador gráfico</p>
+        <div class="hero__actions reveal">
+          <a class="btn btn--dark" href="#proyectos">Ver proyectos</a>
+          <a class="btn btn--dark" href="#contacto">Contacto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Sobre mí ===================== -->
+    <section class="section section--light" id="sobre-mi" aria-labelledby="sobre-mi-title">
+      <div class="container">
+        <div class="about">
+          <figure class="photo reveal">
+            <img src="assets/img/foto-javier-web.jpg" alt="Javier Valencia de pie con los brazos cruzados, con lentes y chamarra de piel negra, de noche" width="1045" height="1400" loading="lazy" data-fallback>
+            <div class="photo__fallback" hidden><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755"></div>
+          </figure>
+
+          <div class="about__text">
+            <header class="section__head reveal" style="margin-bottom: var(--space-sm);">
+              <h2 class="t-heading section__title" id="sobre-mi-title">Sobre mí</h2>
+              <p class="t-sub section__sub">Creativo, detallista y responsable.</p>
+            </header>
+            <p class="t-body reveal">Hola, soy <strong>Javier Valencia</strong>, diseñador gráfico. Actualmente curso la Licenciatura en Diseño Gráfico Digital en la Universidad La Salle, iniciando mi séptimo semestre.</p>
+            <p class="t-body reveal">Me desempeño principalmente en UX/UI, diseño editorial, branding, empaque y fotografía, áreas en las que busco combinar estética, funcionalidad y una sólida intención conceptual.</p>
+            <p class="t-body reveal">Me defino como una persona creativa, detallista y responsable, con una actitud abierta, social y con muchas ganas de aprender. Soy social y extrovertido, lo que me permite trabajar de forma colaborativa y adaptarme con facilidad a distintos equipos.</p>
+            <p class="t-body reveal">Cuento con 1 año y 4 meses de experiencia en una agencia de publicidad, donde participé en proyectos reales y dinámicas de trabajo profesional.</p>
+            <p class="t-body reveal">Actualmente busco oportunidades como becario o colaborador junior en agencias donde pueda seguir desarrollándome y aportar desde el diseño.</p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <article class="box reveal" aria-labelledby="educacion-title">
+            <h3 class="t-card box__title" id="educacion-title">Educación</h3>
+            <p class="t-body degree">Licenciatura en Diseño Gráfico Digital</p>
+            <p class="t-meta">Universidad La Salle · 2023 – Ahora</p>
+          </article>
+
+          <article class="box reveal" aria-labelledby="software-title">
+            <h3 class="t-card box__title" id="software-title">Software</h3>
+            <ul class="rows" role="list">
+              <li class="row"><span class="t-body">Photoshop</span><span class="dots" role="img" aria-label="Nivel 4 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span></span></li>
+              <li class="row"><span class="t-body">Illustrator</span><span class="dots" role="img" aria-label="Nivel 4 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span></span></li>
+              <li class="row"><span class="t-body">Figma</span><span class="dots" role="img" aria-label="Nivel 4 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span></span></li>
+              <li class="row"><span class="t-body">InDesign</span><span class="dots" role="img" aria-label="Nivel 3 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span><span class="dot"></span></span></li>
+              <li class="row"><span class="t-body">Maya</span><span class="dots" role="img" aria-label="Nivel 2 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></li>
+              <li class="row"><span class="t-body">Paquetería Office</span><span class="dots" role="img" aria-label="Nivel 4 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span></span></li>
+            </ul>
+          </article>
+
+          <article class="box reveal" aria-labelledby="idiomas-title">
+            <h3 class="t-card box__title" id="idiomas-title">Idiomas</h3>
+            <dl class="rows">
+              <div class="row"><dt class="t-body">Español</dt><dd class="t-label row__level">Nativo</dd></div>
+              <div class="row"><dt class="t-body">Inglés</dt><dd class="t-label row__level">Avanzado</dd></div>
+              <div class="row"><dt class="t-body">Francés</dt><dd class="t-label row__level">Básico</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Proyectos ===================== -->
+    <section class="section section--dark on-dark" id="proyectos" aria-labelledby="proyectos-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <h2 class="t-heading section__title" id="proyectos-title">Proyectos</h2>
+          <p class="t-sub section__sub">Empaque, UX/UI, editorial, ilustración, identidad y animación.</p>
+        </header>
+
+        <ul class="projects" role="list">
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-kroxi">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/kroxi.png" alt="Logotipo de Kroxi" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Kroxi</div>
+              </div>
+              <span class="tag t-label">Reconocimiento a! diseño</span>
+              <p class="t-label card-project__category">Empaque / Identidad gráfica</p>
+              <h3 class="t-card card-project__title" id="p-kroxi"><a class="card-project__link" href="proyectos/kroxi.html">Kroxi</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-aircanada">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/air-canada.png" alt="Logotipo de Air Canada" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Air Canada</div>
+              </div>
+              <p class="t-label card-project__category">UX/UI</p>
+              <h3 class="t-card card-project__title" id="p-aircanada"><a class="card-project__link" href="proyectos/air-canada.html">Prototipo de aplicación para la aerolínea Air Canada</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-dunkin">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/dunkin.png" alt="Logotipo de Dunkin’" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Dunkin’</div>
+              </div>
+              <p class="t-label card-project__category">UX/UI</p>
+              <h3 class="t-card card-project__title" id="p-dunkin"><a class="card-project__link" href="proyectos/dunkin.html">Prototipo de landing page para Dunkin’</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-prozine">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/prozine.png" alt="Logotipo de Mercedes-Benz Prozine" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Prozine</div>
+              </div>
+              <p class="t-label card-project__category">Diseño editorial</p>
+              <h3 class="t-card card-project__title" id="p-prozine"><a class="card-project__link" href="proyectos/prozine.html">Prozine (Mercedes-Benz)</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-jarritos">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/jarritos.png" alt="Logotipo de Jarritos" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Jarritos</div>
+              </div>
+              <p class="t-label card-project__category">Ilustración digital / Identidad gráfica</p>
+              <h3 class="t-card card-project__title" id="p-jarritos"><a class="card-project__link" href="proyectos/jarritos.html">Propuesta de una nueva línea de sabores para Jarritos, inspirada en la Selva Mexicana</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-quest">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/quest.png" alt="Logotipo de Laboratorios Quest" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Quest</div>
+              </div>
+              <p class="t-label card-project__category">Identidad gráfica</p>
+              <h3 class="t-card card-project__title" id="p-quest"><a class="card-project__link" href="proyectos/quest.html">Rediseño de Laboratorios Quest</a></h3>
+            </article>
+          </li>
+          <li class="reveal">
+            <article class="card-project" aria-labelledby="p-bighero">
+              <div class="card-project__media">
+                <img class="card-project__img" src="assets/img/web/logos/big-hero-6.png" alt="Logotipo de Big Hero 6" loading="lazy" data-fallback>
+                <div class="card-project__fallback" aria-hidden="true" hidden>Big Hero 6</div>
+              </div>
+              <p class="t-label card-project__category">Animación</p>
+              <h3 class="t-card card-project__title" id="p-bighero"><a class="card-project__link" href="proyectos/big-hero-6.html">Animación 2D para los créditos de Big Hero 6</a></h3>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== Experiencia ===================== -->
+    <section class="section section--light" id="experiencia" aria-labelledby="experiencia-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <h2 class="t-heading section__title" id="experiencia-title">Experiencia</h2>
+          <p class="t-sub section__sub">Agencia de publicidad y proyecto propio.</p>
+        </header>
+
+        <ol class="experience" role="list">
+          <li class="card-experience reveal">
+            <div>
+              <h3 class="t-card card-experience__title">Cofundador y diseñador</h3>
+              <p class="t-body card-experience__place">Keep It Custom</p>
+              <p class="t-meta card-experience__meta">Abril 2025 – Actual</p>
+            </div>
+            <p class="t-body">Proyecto propio de impresión personalizada en textiles que fundé junto con un amigo. Me encargo del arte, la vectorización y la preparación de archivos para impresión, además de asumir responsabilidades creativas y de organización.</p>
+          </li>
+          <li class="card-experience reveal">
+            <div>
+              <h3 class="t-card card-experience__title">Creador de contenido</h3>
+              <p class="t-body card-experience__place">CREACONT</p>
+              <p class="t-meta card-experience__meta">Septiembre 2024 – Diciembre 2025</p>
+            </div>
+            <p class="t-body">Agencia de publicidad donde desarrollé principalmente parrillas de Instagram y piezas gráficas para redes sociales. Esta experiencia me permitió entender mejor los procesos creativos, el trabajo en equipo y la importancia de comunicar de forma clara y visual.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== Contacto ===================== -->
+    <section class="section section--dark on-dark" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <h2 class="t-heading section__title" id="contacto-title">Contacto</h2>
+          <p class="t-sub section__sub">Escríbeme o búscame en redes.</p>
+        </header>
+
+        <ul class="contact" role="list">
+          <li class="reveal">
+            <a class="contact-link" href="mailto:javvalencia@gmail.com">
+              <span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></span>
+              <span class="contact-link__text"><span class="t-label contact-link__label">Correo</span><span class="t-body contact-link__value">javvalencia@gmail.com</span></span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="contact-link" href="tel:+525562191967">
+              <span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M11 18h2"/></svg></span>
+              <span class="contact-link__text"><span class="t-label contact-link__label">Teléfono</span><span class="t-body contact-link__value">55 6219 1967</span></span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="contact-link" href="https://www.linkedin.com/in/javier-v-46b795307/" target="_blank" rel="noopener noreferrer">
+              <span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM3.2 9.4h3.6V20.5H3.2zM9.2 9.4h3.4v1.5h.05c.48-.9 1.66-1.85 3.4-1.85 3.64 0 4.3 2.4 4.3 5.5v5.95h-3.6v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79v5.36H9.2z"/></svg></span>
+              <span class="contact-link__text"><span class="t-label contact-link__label">LinkedIn</span><span class="t-body contact-link__value">Javier V.<span class="sr-only"> (se abre en una pestaña nueva)</span></span></span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="contact-link" href="https://www.behance.net/javiervalenci5" target="_blank" rel="noopener noreferrer">
+              <span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.5 6h6.1c2.2 0 3.6 1.1 3.6 2.9 0 1.2-.6 2-1.6 2.4 1.4.4 2.1 1.4 2.1 2.8 0 2.2-1.7 3.4-4.2 3.4H2.5zm2.6 2.1v2.7h3c.9 0 1.5-.5 1.5-1.4 0-.8-.6-1.3-1.5-1.3zm0 4.7v3h3.3c1 0 1.7-.6 1.7-1.5 0-.9-.7-1.5-1.7-1.5zM15.2 7h5.4v1.3h-5.4zM17.9 9.6c2.6 0 3.9 1.8 3.8 4.6h-5.8c.1 1.3.9 2 2.1 2 .9 0 1.4-.4 1.7-1h1.9c-.5 1.8-1.9 2.7-3.7 2.7-2.4 0-4-1.6-4-4.1 0-2.5 1.6-4.2 4-4.2zm-.1 1.6c-1 0-1.7.6-1.9 1.7h3.7c-.1-1.1-.8-1.7-1.8-1.7z"/></svg></span>
+              <span class="contact-link__text"><span class="t-label contact-link__label">Behance</span><span class="t-body contact-link__value">Javier Valencia Vitela<span class="sr-only"> (se abre en una pestaña nueva)</span></span></span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="contact-link" href="https://www.instagram.com/__javier_v/" target="_blank" rel="noopener noreferrer">
+              <span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></span>
+              <span class="contact-link__text"><span class="t-label contact-link__label">Instagram</span><span class="t-body contact-link__value">@__javier_v<span class="sr-only"> (se abre en una pestaña nueva)</span></span></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== Pie de página ===================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+        <div>
+          <p class="t-card">Javier Valencia</p>
+          <p class="t-meta footer__meta">Diseñador gráfico · <span id="year">2026</span></p>
+        </div>
+      </div>
+      <a class="btn btn--light" href="#inicio" data-back-to-top>Volver arriba</a>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var header = document.querySelector(".header");
+
+    /* ---------- Imágenes pendientes: si falta el archivo, se muestra el respaldo ---------- */
+    document.querySelectorAll("img[data-fallback]").forEach(function (img) {
+      function useFallback() {
+        img.hidden = true;
+        var fb = img.nextElementSibling;
+        if (fb) fb.hidden = false;
+      }
+      if (img.complete && img.naturalWidth === 0) useFallback();
+      else img.addEventListener("error", useFallback);
+    });
+
+    /* ---------- Menú hamburguesa ---------- */
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.getElementById("nav");
+    function setMenu(open) {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      nav.classList.toggle("is-open", open);
+    }
+    toggle.addEventListener("click", function () { setMenu(toggle.getAttribute("aria-expanded") !== "true"); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { setMenu(false); toggle.focus(); }
+    });
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", function (mq) { if (mq.matches) setMenu(false); });
+
+    /* ---------- Header: borde al hacer scroll ---------- */
+    function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
+    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+    /* ---------- Header verde sobre el hero, hueso al bajar ---------- */
+    var hero = document.getElementById("inicio");
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        header.classList.toggle("is-on-hero", entries[0].isIntersecting);
+      }, { rootMargin: "-" + header.offsetHeight + "px 0px 0px 0px", threshold: 0 }).observe(hero);
+    } else {
+      header.classList.remove("is-on-hero");
+    }
+
+    /* ---------- Enlace de la sección actual ---------- */
+    var links = Array.prototype.slice.call(nav.querySelectorAll(".nav-link"));
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    if ("IntersectionObserver" in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (a) { a.removeAttribute("aria-current"); });
+          var link = byId[entry.target.id];
+          if (link) link.setAttribute("aria-current", "true");
+        });
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      document.querySelectorAll("main section[id]").forEach(function (s) { spy.observe(s); });
+    }
+
+    /* ---------- Volver arriba: al hero ---------- */
+    document.querySelector("[data-back-to-top]").addEventListener("click", function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      document.getElementById("hero-title").focus({ preventScroll: true });
+    });
+
+    /* ---------- Año del pie de página ---------- */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- Aparición suave al hacer scroll ---------- */
+    var reveals = document.querySelectorAll(".reveal");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      reveals.forEach(function (el) { el.classList.add("is-in"); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+      reveals.forEach(function (el) { io.observe(el); });
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1621 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jv · Sistema de diseño</title>
+  <meta name="description" content="Referencia visual del sistema de diseño jv de Javier Valencia: colores, tipografía, espaciado, formas, elevación y componentes.">
+  <meta name="theme-color" content="#004804">
+  <link rel="preload" href="assets/fonts/Urbanist-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* ============================================================
+       Tipografías (assets/fonts)
+       ============================================================ */
+    @font-face { font-family: "Urbanist"; src: url("assets/fonts/Urbanist-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Urbanist"; src: url("assets/fonts/Urbanist-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+    /* ============================================================
+       Tokens (DESIGN.md)
+       ============================================================ */
+    :root {
+      /* colors */
+      --color-primary: #004804;
+      --color-on-primary: #FFF8EB;
+      --color-secondary: #ADF3AF;
+      --color-on-secondary: #004804;
+      --color-tertiary: #FF1542;
+      --color-on-tertiary: #FFF8EB;
+      --color-neutral: #FFF8EB;
+      --color-surface: var(--color-neutral);
+      --color-on-surface: #111111;
+      --color-surface-inverse: var(--color-primary);
+      --color-on-surface-inverse: var(--color-on-primary);
+      --color-surface-soft: #EAF7E4;
+      --color-surface-inverse-soft: #0E6012;
+
+      /* typography */
+      --font-display: "Urbanist", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+
+      /* spacing */
+      --space-unit: 8px;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 64px;
+      --space-button-y: 14px;
+      --space-button-x: 32px;
+      --space-section: 120px;
+      --space-section-tablet: 96px;
+      --space-section-mobile: 64px;
+      --space-container: 1200px;
+      --space-gutter: 24px;
+      --space-header-height: 80px;
+      --space-touch-target: 44px;
+      --space-divider: 2px;
+
+      /* rounded */
+      --rounded-sm: 16px;
+      --rounded-md: 24px;
+      --rounded-full: 9999px;
+
+      /* motion & elevation */
+      --ease: ease-out;
+      --duration: 0.3s;
+      --shadow-hover: 0 12px 32px rgba(0, 72, 4, 0.15);
+      --lift: -6px;
+
+      /* section rhythm: mobile first */
+      --section-pad: var(--space-section-mobile);
+    }
+    @media (min-width: 768px)  { :root { --section-pad: var(--space-section-tablet); } }
+    @media (min-width: 1024px) { :root { --section-pad: var(--space-section); } }
+
+    /* ============================================================
+       Base
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--space-header-height) + var(--space-sm)); -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--color-surface);
+      color: var(--color-on-surface);
+      font-family: var(--font-body);
+      font-size: 16px; line-height: 1.6; font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    @media (min-width: 768px) { body { font-size: 18px; } }
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, h4, p, ul, ol, figure, dl, dd { margin: 0; }
+    ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+
+    :focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; border-radius: var(--rounded-sm); }
+    .on-dark :focus-visible { outline-color: var(--color-secondary); }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .skip-link {
+      position: absolute; left: var(--space-gutter); top: -100px; z-index: 100;
+      background: var(--color-primary); color: var(--color-secondary);
+      padding: var(--space-button-y) var(--space-button-x); border-radius: var(--rounded-full);
+      font: 700 16px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; text-decoration: none;
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    .container { width: 100%; max-width: calc(var(--space-container) + 2 * var(--space-gutter)); margin-inline: auto; padding-inline: var(--space-gutter); }
+
+    /* ============================================================
+       Escala tipográfica (clases utilitarias)
+       ============================================================ */
+    .t-display  { font: 700 40px/1.1 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-heading  { font: 700 32px/1.15 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-sub      { font: 300 28px/1.3 var(--font-display); letter-spacing: 0; }
+    .t-card     { font: 700 22px/1.3 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .t-body     { font: 400 16px/1.6 var(--font-body); }
+    .t-label    { font: 500 14px/1.4 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase; }
+    .t-meta     { font: 400 14px/1.4 var(--font-body); }
+    .t-button   { font: 700 19px/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; }
+    @media (min-width: 768px) {
+      .t-display { font-size: 64px; }
+      .t-heading { font-size: 44px; }
+      .t-body    { font-size: 18px; }
+    }
+    .t-mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; letter-spacing: 0; text-transform: none; }
+
+    /* ============================================================
+       Secciones alternadas
+       ============================================================ */
+    .section { padding-block: var(--section-pad); }
+    .section--light { background: var(--color-surface); color: var(--color-on-surface); }
+    .section--dark  { background: var(--color-surface-inverse); color: var(--color-on-surface-inverse); }
+    .section__head { display: grid; gap: var(--space-sm); margin-bottom: var(--space-xl); max-width: 760px; }
+    .section--light .section__title { color: var(--color-primary); }
+    .section--dark  .section__title { color: var(--color-secondary); }
+    .section--light .section__sub { color: var(--color-primary); }
+    .section--dark  .section__sub { color: var(--color-secondary); }
+    .eyebrow { display: inline-flex; align-items: center; gap: var(--space-xs); }
+    .section--light .eyebrow { color: var(--color-primary); }
+    .section--dark  .eyebrow { color: var(--color-secondary); }
+    .eyebrow::before { content: ""; width: 24px; height: var(--space-divider); border-radius: var(--rounded-full); background: currentColor; }
+
+    .block + .block { margin-top: var(--space-2xl); }
+    .block__title { margin-bottom: var(--space-md); }
+    .section--light .block__title { color: var(--color-primary); }
+    .section--dark  .block__title { color: var(--color-secondary); }
+
+    .divider { height: var(--space-divider); border: 0; border-radius: var(--rounded-full); background: var(--color-primary); margin: var(--space-xl) 0; }
+    .section--dark .divider { background: var(--color-secondary); }
+
+    /* ============================================================
+       Logo (trazo recortado, fondo transparente, en los dos verdes)
+       ============================================================ */
+    .logo { display: block; height: 48px; width: auto; aspect-ratio: 524 / 755; }
+
+    /* ============================================================
+       Header
+       ============================================================ */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      height: var(--space-header-height);
+      background: var(--color-surface); color: var(--color-primary);
+      border-bottom: var(--space-divider) solid transparent;
+      transition: border-color var(--duration) var(--ease);
+    }
+    .header { transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+    .header.is-scrolled { border-bottom-color: var(--color-surface-soft); }
+    /* Estado inicial sobre el hero: verde fuerte, sin tonos intermedios */
+    .header.is-on-hero { background: var(--color-surface-inverse); color: var(--color-secondary); border-bottom-color: transparent; }
+    .header.is-on-hero .brand { color: var(--color-secondary); }
+    .header.is-on-hero .nav-link { color: var(--color-secondary); }
+    .header.is-on-hero .nav-link:hover, .header.is-on-hero .nav-link[aria-current="true"] { color: var(--color-on-primary); }
+    .header.is-on-hero .nav-link::after { background: var(--color-on-primary); }
+    .header.is-on-hero .nav-toggle { border-color: var(--color-secondary); color: var(--color-secondary); }
+    .header.is-on-hero .nav-toggle:hover { background: var(--color-secondary); color: var(--color-primary); }
+    .header.is-on-hero :focus-visible { outline-color: var(--color-secondary); }
+    .brand__logo { position: relative; display: block; height: 44px; aspect-ratio: 524 / 755; flex: none; }
+    .brand__logo .logo { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity var(--duration) var(--ease); }
+    .brand__logo .logo--claro { opacity: 0; }
+    .header.is-on-hero .brand__logo .logo--claro { opacity: 1; }
+    .header.is-on-hero .brand__logo .logo--oscuro { opacity: 0; }
+    .header__inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .brand { display: inline-flex; align-items: center; gap: var(--space-sm); text-decoration: none; color: var(--color-primary); min-height: var(--space-touch-target); border-radius: var(--rounded-sm); }
+    .brand__text { display: grid; line-height: 1.1; }
+    .brand__name { font: 700 22px/1 var(--font-display); letter-spacing: 0.02em; }
+    .brand__tag { font: 500 12px/1.4 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.85; }
+
+    .nav__list { display: flex; gap: var(--space-xs); }
+    .nav-link {
+      position: relative; display: inline-flex; align-items: center; min-height: var(--space-touch-target);
+      padding: var(--space-xs); color: var(--color-primary); text-decoration: none; border-radius: var(--rounded-sm);
+      transition: color var(--duration) var(--ease);
+    }
+    .nav-link::after {
+      content: ""; position: absolute; left: var(--space-xs); right: var(--space-xs); bottom: 6px;
+      height: var(--space-divider); border-radius: var(--rounded-full); background: var(--color-tertiary);
+      transform: scaleX(0); transition: transform var(--duration) var(--ease);
+    }
+    .nav-link:hover, .nav-link[aria-current="true"] { color: var(--color-tertiary); }
+    .nav-link[aria-current="true"]::after { transform: scaleX(1); }
+
+    .nav-toggle {
+      display: none; width: var(--space-touch-target); height: var(--space-touch-target);
+      border: var(--space-divider) solid var(--color-tertiary); border-radius: var(--rounded-full);
+      background: transparent; color: var(--color-tertiary); cursor: pointer; place-items: center;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+    }
+    .nav-toggle:hover { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+    .nav-toggle svg { width: 20px; height: 20px; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+    @media (max-width: 1023px) {
+      .js .nav-toggle { display: grid; }
+      .js .nav {
+        position: fixed; inset: var(--space-header-height) 0 auto 0;
+        background: var(--color-surface); padding: var(--space-sm) var(--space-gutter) var(--space-lg);
+        border-bottom: var(--space-divider) solid var(--color-surface-soft);
+        visibility: hidden; opacity: 0; transform: translateY(-8px);
+        transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease), visibility 0s linear var(--duration);
+      }
+      .js .nav.is-open { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+      .js .header.is-on-hero .nav { background: var(--color-surface-inverse); border-bottom-color: var(--color-surface-inverse-soft); }
+      .js .nav__list { flex-direction: column; gap: 0; }
+      .nav { overflow-x: auto; }
+    }
+
+    /* ============================================================
+       Hero
+       ============================================================ */
+    .hero { background: var(--color-surface-inverse); color: var(--color-on-surface-inverse); padding-block: var(--section-pad); }
+    .hero__grid { display: grid; gap: var(--space-xl); align-items: center; }
+    .hero__logo { color: var(--color-secondary); justify-self: center; }
+    .hero__logo .logo { height: 220px; }
+    .hero__title { color: var(--color-secondary); }
+    .hero__title:focus { outline: none; }
+    .hero__sub { color: var(--color-secondary); margin-top: var(--space-sm); }
+    .hero__lead { margin-top: var(--space-md); max-width: 620px; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
+    .hero__stats { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-lg); }
+    .chip {
+      display: inline-flex; align-items: center; gap: var(--space-xs); padding: 6px var(--space-sm);
+      border-radius: var(--rounded-full); background: var(--color-surface-inverse-soft); color: var(--color-secondary);
+    }
+    /* Píldoras que no son botones: verde fuerte sobre hueso, verde medio sobre verde fuerte */
+    .tag {
+      display: inline-flex; align-items: center; padding: 6px var(--space-sm); border-radius: var(--rounded-full);
+      background: var(--color-primary); color: var(--color-secondary);
+    }
+    .section--dark .tag { background: var(--color-surface-inverse-soft); }
+    @media (min-width: 768px) {
+      .hero__grid { grid-template-columns: 1.6fr 1fr; }
+      .hero__logo { order: 2; }
+      .hero__logo .logo { height: 360px; }
+    }
+
+    /* ============================================================
+       Botones
+       ============================================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs);
+      min-height: var(--space-touch-target);
+      padding: var(--space-button-y) var(--space-button-x);
+      border: var(--space-divider) solid currentColor; border-radius: var(--rounded-full);
+      font: 700 19px/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; background: transparent;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+    }
+    .btn--light { color: var(--color-tertiary); border-color: var(--color-tertiary); }
+    .btn--light:hover, .btn--light.is-hover { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+    .btn--dark { color: var(--color-secondary); border-color: var(--color-secondary); }
+    .btn--dark:hover, .btn--dark.is-hover { background: var(--color-secondary); color: var(--color-on-secondary); }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+
+    /* ============================================================
+       Marca
+       ============================================================ */
+    .grid-2 { display: grid; gap: var(--space-md); }
+    .grid-3 { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px)  { .grid-2 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .logo-tile { border-radius: var(--rounded-md); padding: var(--space-lg); display: grid; gap: var(--space-md); min-height: 320px; }
+    .logo-tile__art { display: grid; place-items: center; flex: 1; padding-block: var(--space-md); }
+    .logo-tile .logo { height: 180px; }
+    .logo-tile--dark  { background: var(--color-primary); color: var(--color-secondary); }
+    .logo-tile--light { background: var(--color-secondary); color: var(--color-primary); }
+    .logo-tile__caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-xs); align-items: baseline; }
+
+    .box { border-radius: var(--rounded-md); padding: var(--space-lg); }
+    /* Recuadros: siempre rellenos y sin borde (el contorno es exclusivo de los botones) */
+    .box--filled { background: var(--color-surface-soft); color: var(--color-on-surface); }
+    .section--dark .box--filled { background: var(--color-surface-inverse-soft); color: var(--color-on-surface-inverse); }
+    .box__title { color: var(--color-primary); margin-bottom: var(--space-xs); }
+    .box__kicker { color: var(--color-primary); margin-bottom: var(--space-sm); display: block; }
+    .section--dark .box--filled .box__title, .section--dark .box--filled .box__kicker { color: var(--color-secondary); }
+    .section--dark .box--filled.box--demo-light { background: var(--color-surface-soft); color: var(--color-on-surface); }
+    .section--dark .box--filled.box--demo-light .box__title, .section--dark .box--filled.box--demo-light .box__kicker { color: var(--color-primary); }
+    .name-sample { font: 700 32px/1.15 var(--font-display); letter-spacing: 0.02em; color: var(--color-primary); margin-bottom: var(--space-sm); }
+
+    /* ============================================================
+       Colores
+       ============================================================ */
+    .swatches { display: grid; gap: var(--space-md); grid-template-columns: 1fr; }
+    @media (min-width: 560px)  { .swatches { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .swatches { grid-template-columns: repeat(3, 1fr); } }
+    .swatch {
+      border-radius: var(--rounded-md); padding: var(--space-xs);
+      display: flex; flex-direction: column; background: var(--color-surface-inverse-soft);
+    }
+    .swatch__chip {
+      height: 140px; border: 0; width: 100%; cursor: pointer; position: relative; display: block;
+      border-radius: var(--rounded-sm); padding: 0; text-align: left;
+    }
+    .swatch__chip:focus-visible { outline-offset: 3px; border-radius: var(--rounded-sm); }
+    .swatch__copyhint {
+      position: absolute; right: var(--space-sm); bottom: var(--space-sm);
+      padding: 6px 12px; border-radius: var(--rounded-full); background: var(--color-surface); color: var(--color-primary);
+      opacity: 0; transform: translateY(4px); transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+    }
+    .swatch__chip:hover .swatch__copyhint, .swatch__chip:focus-visible .swatch__copyhint { opacity: 1; transform: none; }
+    .swatch__body { padding: var(--space-sm) var(--space-sm) var(--space-xs); display: grid; gap: var(--space-xs); }
+    .swatch__name { color: var(--color-secondary); }
+    .swatch__row { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-sm); align-items: center; }
+    .swatch__hex { font: 500 14px/1.4 var(--font-body); letter-spacing: 0.04em; }
+    .swatch__token { opacity: 0.85; }
+    .swatch__role { color: var(--color-on-primary); }
+
+    .pairs { display: grid; gap: var(--space-md); grid-template-columns: 1fr; }
+    @media (min-width: 768px)  { .pairs { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .pairs { grid-template-columns: repeat(3, 1fr); } }
+    .pairs-panel { background: var(--color-surface-inverse-soft); border-radius: var(--rounded-md); padding: var(--space-md); }
+    @media (min-width: 768px) { .pairs-panel { padding: var(--space-lg); } }
+    .pair { border-radius: var(--rounded-md); padding: var(--space-md); display: grid; gap: var(--space-sm); min-height: 168px; align-content: space-between; }
+    .pair__sample { font: 700 28px/1.15 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .pair__meta { display: flex; justify-content: space-between; align-items: center; gap: var(--space-xs); flex-wrap: wrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--rounded-full);
+      font: 500 12px/1.4 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase;
+      background: var(--color-surface); color: var(--color-primary);
+    }
+    .badge--no { background: var(--color-on-surface); color: var(--color-on-primary); }
+    .badge svg { width: 14px; height: 14px; }
+
+    /* ============================================================
+       Tipografía
+       ============================================================ */
+    .families { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px) { .families { grid-template-columns: repeat(2, 1fr); } }
+    .family { display: grid; gap: var(--space-sm); }
+    .family__aa { font-size: 120px; line-height: 1; color: var(--color-primary); }
+    .family__aa--urbanist { font-family: var(--font-display); font-weight: 700; }
+    .family__aa--inter { font-family: var(--font-body); font-weight: 400; }
+    .family__weights { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+    .weight-pill { padding: 6px 12px; border-radius: var(--rounded-full); background: var(--color-primary); color: var(--color-secondary); }
+    .family__chars { color: var(--color-on-surface); word-break: break-word; }
+
+    .segmented { display: inline-flex; padding: 4px; gap: 4px; border: var(--space-divider) solid var(--color-tertiary); border-radius: var(--rounded-full); margin-bottom: var(--space-lg); }
+    .segmented button {
+      min-height: var(--space-touch-target); padding: 0 var(--space-md); border: 0; border-radius: var(--rounded-full); background: transparent;
+      color: var(--color-tertiary); cursor: pointer; transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+    }
+    .segmented button[aria-pressed="true"] { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+
+    .scale { display: grid; }
+    .scale__row { display: grid; gap: var(--space-sm); padding-block: var(--space-md); border-top: var(--space-divider) solid var(--color-surface-soft); }
+    .scale__row:last-child { border-bottom: var(--space-divider) solid var(--color-surface-soft); }
+    @media (min-width: 1024px) { .scale__row { grid-template-columns: 260px 1fr; gap: var(--space-lg); align-items: center; } }
+    .scale__meta { display: grid; gap: 4px; color: var(--color-primary); }
+    .scale__specs { color: var(--color-on-surface); }
+    .scale__sample { color: var(--color-primary); overflow-wrap: anywhere; }
+    .scale__sample--body, .scale__sample--meta { color: var(--color-on-surface); }
+    /* tamaños fijos de la muestra según el modo elegido */
+    .scale [data-size="display"] { font: 700 64px/1.1 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .scale [data-size="heading"] { font: 700 44px/1.15 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .scale [data-size="sub"]     { font: 300 28px/1.3 var(--font-display); }
+    .scale [data-size="card"]    { font: 700 22px/1.3 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    .scale [data-size="body"]    { font: 400 18px/1.6 var(--font-body); }
+    .scale [data-size="label"]   { font: 500 14px/1.4 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase; }
+    .scale [data-size="meta"]    { font: 400 14px/1.4 var(--font-body); }
+    .scale [data-size="button"]  { font: 700 19px/1 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; }
+    .scale[data-mode="mobile"] [data-size="display"] { font-size: 40px; }
+    .scale[data-mode="mobile"] [data-size="heading"] { font-size: 32px; }
+    .scale[data-mode="mobile"] [data-size="body"]    { font-size: 16px; }
+    .size-value { transition: color var(--duration) var(--ease); }
+
+    .hierarchy { margin-top: var(--space-2xl); }
+    .hierarchy__title { color: var(--color-primary); }
+    .hierarchy__sub { color: var(--color-primary); margin-top: var(--space-xs); }
+    .hierarchy__body { margin-top: var(--space-md); max-width: 680px; }
+
+    /* ============================================================
+       Layout y espaciado
+       ============================================================ */
+    .space-list { display: grid; gap: var(--space-sm); }
+    .space-row { display: grid; grid-template-columns: 140px 1fr; gap: var(--space-sm); align-items: center; }
+    @media (min-width: 768px) { .space-row { grid-template-columns: 200px 1fr; } }
+    .space-row__label { display: grid; color: var(--color-secondary); }
+    .space-row__track { min-width: 0; }
+    .space-bar { height: 24px; border-radius: var(--rounded-full); background: var(--color-secondary); max-width: 100%; min-width: 8px; }
+
+    .bp-grid { display: grid; gap: var(--space-md); }
+    @media (min-width: 1024px) { .bp-grid { grid-template-columns: repeat(3, 1fr); } }
+    .bp { background: var(--color-surface-inverse-soft); border-radius: var(--rounded-md); padding: var(--space-md); display: grid; gap: var(--space-sm); align-content: start; }
+    .bp__title { color: var(--color-secondary); }
+    .bp__demo { display: grid; gap: var(--space-xs); padding: var(--space-sm); border-radius: var(--rounded-sm); background: var(--color-on-primary); }
+    .bp__demo span { height: 40px; border-radius: 8px; background: var(--color-primary); }
+    .bp__demo--1 { grid-template-columns: 1fr; }
+    .bp__demo--2 { grid-template-columns: repeat(2, 1fr); }
+    .bp__demo--3 { grid-template-columns: repeat(3, 1fr); }
+    .bp dl { display: grid; grid-template-columns: auto 1fr; gap: 4px var(--space-sm); }
+    .bp dt { opacity: 0.85; }
+    .bp dd { text-align: right; }
+
+    .padding-demo { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px) { .padding-demo { grid-template-columns: repeat(3, 1fr); } }
+    .pad-sample { background: var(--color-surface-inverse-soft); border-radius: var(--rounded-md); display: grid; place-items: center; min-height: 160px; padding: var(--space-md); text-align: center; gap: var(--space-sm); }
+    .pad-sample__inner { background: var(--color-secondary); color: var(--color-on-secondary); border-radius: var(--rounded-sm); padding: var(--space-xs) var(--space-sm); }
+
+    /* ============================================================
+       Elevación
+       ============================================================ */
+    .elev-grid { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px) { .elev-grid { grid-template-columns: repeat(2, 1fr); } }
+    .elev-card { border: var(--space-divider) solid var(--color-primary); border-radius: var(--rounded-md); padding: var(--space-md); background: var(--color-surface); min-height: 220px; display: grid; align-content: space-between; gap: var(--space-md); }
+    .elev-card--live { transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease); cursor: default; }
+    .elev-card--live:hover, .elev-card--live:focus-visible { transform: translateY(var(--lift)); box-shadow: var(--shadow-hover); }
+    .elev-card__title { color: var(--color-primary); }
+    .code { display: inline-block; justify-self: start; padding: 4px 12px; border-radius: var(--rounded-full); background: var(--color-primary); color: var(--color-secondary); }
+    .section--dark .code { background: var(--color-surface-inverse-soft); color: var(--color-secondary); }
+    .planes { display: grid; grid-template-columns: repeat(2, 1fr); border-radius: var(--rounded-md); overflow: hidden; min-height: 220px; }
+    .planes > div { padding: var(--space-md); display: grid; align-content: end; gap: 4px; }
+    .planes__light { background: var(--color-surface); color: var(--color-primary); }
+    .planes__dark  { background: var(--color-primary); color: var(--color-secondary); }
+
+    /* ============================================================
+       Formas
+       ============================================================ */
+    .radii { display: grid; gap: var(--space-md); grid-template-columns: 1fr; }
+    @media (min-width: 560px)  { .radii { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .radii { grid-template-columns: repeat(4, 1fr); } }
+    .radius { display: grid; gap: var(--space-sm); }
+    .radius__shape { height: 140px; background: var(--color-surface-inverse-soft); display: grid; place-items: center; color: var(--color-secondary); }
+    .radius__shape--sm   { border-radius: var(--rounded-sm); }
+    .radius__shape--md   { border-radius: var(--rounded-md); }
+    .radius__shape--full { border-radius: var(--rounded-full); height: 64px; align-self: center; margin-block: 38px; }
+    .radius__shape--circle { border-radius: var(--rounded-full); width: 140px; justify-self: start; }
+    .radius__name { color: var(--color-secondary); }
+
+    .nested { display: grid; gap: var(--space-md); margin-top: var(--space-2xl); }
+    @media (min-width: 768px) { .nested { grid-template-columns: 1fr 1fr; align-items: center; } }
+    .nested__card { background: var(--color-on-primary); border-radius: var(--rounded-md); padding: var(--space-md); color: var(--color-on-surface); }
+    .nested__img { aspect-ratio: 16 / 10; border-radius: var(--rounded-sm); background: var(--color-secondary); display: grid; place-items: center; color: var(--color-primary); }
+    .nested__img .logo { height: 72px; }
+    .nested__legend { display: grid; gap: var(--space-sm); }
+    .legend-item { display: flex; gap: var(--space-sm); align-items: center; }
+    .legend-dot { width: 32px; height: 32px; flex: none; border-radius: var(--rounded-full); display: grid; place-items: center; background: var(--color-secondary); color: var(--color-on-secondary); font: 700 14px/1 var(--font-display); }
+
+    .variants { margin-top: var(--space-2xl); }
+
+    /* ============================================================
+       Componentes
+       ============================================================ */
+    .comp { display: grid; gap: var(--space-md); }
+    .comp__label { color: var(--color-primary); }
+    .stage { border-radius: var(--rounded-md); padding: var(--space-lg); display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; }
+    .stage--light { background: transparent; padding-inline: 0; }
+    .stage--dark  { background: var(--color-primary); color: var(--color-on-primary); }
+    .stage__note { width: 100%; }
+    .stage--light .stage__note { color: var(--color-primary); }
+    .stage--dark  .stage__note { color: var(--color-secondary); }
+
+    .demo-nav { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+
+    /* Cuadrícula de proyectos: la última fila incompleta queda centrada */
+    .projects { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); }
+    .projects > li { flex: 0 1 100%; }
+    @media (min-width: 768px)  { .projects > li { flex-basis: calc((100% - var(--space-md)) / 2); } }
+    @media (min-width: 1024px) { .projects > li { flex-basis: calc((100% - 2 * var(--space-md)) / 3); } }
+    .card-project {
+      display: grid; gap: var(--space-sm); align-content: start;
+      background: var(--color-surface); color: var(--color-on-surface);
+      border: var(--space-divider) solid var(--color-primary); border-radius: var(--rounded-md);
+      padding: var(--space-md); text-decoration: none;
+      transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+    }
+    .card-project:hover, .card-project:focus-visible { transform: translateY(var(--lift)); box-shadow: var(--shadow-hover); }
+    .card-project:focus-visible { border-radius: var(--rounded-md); }
+    .card-project__media { border-radius: var(--rounded-sm); overflow: hidden; aspect-ratio: 4 / 3; border: var(--space-divider) solid var(--color-primary); }
+    .card-project__img { width: 100%; height: 100%; display: grid; place-items: center; transition: transform var(--duration) var(--ease); }
+    .card-project:hover .card-project__img, .card-project:focus-visible .card-project__img { transform: scale(1.04); }
+    .card-project__img--a, .card-project__img--b, .card-project__img--c { background: transparent; color: var(--color-primary); }
+    .card-project__img .logo { height: 96px; }
+    .card-project__category { color: var(--color-primary); margin-top: var(--space-xs); }
+    .card-project__title { color: var(--color-primary); }
+
+    .experience { display: grid; gap: var(--space-md); }
+    .card-experience {
+      border-radius: var(--rounded-md); padding: var(--space-md);
+      background: var(--color-surface-soft); display: grid; gap: var(--space-xs);
+    }
+    @media (min-width: 768px) { .card-experience { grid-template-columns: 1fr auto; align-items: center; gap: var(--space-md); } }
+    .card-experience__title { color: var(--color-primary); }
+    .card-experience__meta { color: var(--color-on-surface); }
+    .card-experience__time { color: var(--color-primary); }
+
+    .icons { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .icon-circle {
+      width: 48px; height: 48px; border-radius: var(--rounded-full); display: grid; place-items: center;
+      background: var(--color-secondary); color: var(--color-primary); text-decoration: none;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+    }
+    .icon-circle:hover, .icon-circle.is-hover { background: var(--color-primary); color: var(--color-secondary); }
+    .icon-circle:focus-visible { border-radius: var(--rounded-full); }
+    .icon-circle svg { width: 22px; height: 22px; }
+    .steps { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .step { width: 48px; height: 48px; border-radius: var(--rounded-full); display: grid; place-items: center; background: var(--color-primary); color: var(--color-secondary); font: 700 19px/1 var(--font-display); }
+    .compare { display: grid; gap: var(--space-md); align-content: start; }
+    .compare__label { color: var(--color-primary); }
+    .compare__row { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; }
+
+
+    /* ============================================================
+       Componentes del CV y de las páginas de proyecto
+       ============================================================ */
+    .demo-grid { display: grid; gap: var(--space-md); }
+    @media (min-width: 1024px) { .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* level-dot / level-dot-empty */
+    .rows { display: grid; gap: var(--space-sm); }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); flex-wrap: wrap; }
+    .dots { display: inline-flex; gap: 6px; }
+    .dot { width: 14px; height: 14px; border-radius: var(--rounded-full); background: var(--color-surface-soft); border: var(--space-divider) solid var(--color-primary); }
+    .dot--on { background: var(--color-primary); }
+    .strong { font: 500 16px/1.6 var(--font-body); color: var(--color-primary); }
+    @media (min-width: 768px) { .strong { font-size: 18px; } }
+
+    /* card-project-dark */
+    .stage--dark .projects-demo { width: 100%; display: flex; justify-content: center; }
+    .card-project--dark { border: 0; max-width: 360px; width: 100%; }
+    .card-project--dark:hover, .card-project--dark:focus-visible { box-shadow: 0 12px 32px rgba(17, 17, 17, 0.35); }
+    .tag { display: inline-flex; align-items: center; align-self: flex-start; justify-self: start; padding: 6px var(--space-sm); border-radius: var(--rounded-full); background: var(--color-primary); color: var(--color-secondary); }
+    .section--dark .tag, .stage--dark .tag-dark { background: var(--color-surface-inverse-soft); color: var(--color-secondary); }
+
+    /* contact-link (sobre verde) */
+    .contact-demo { display: grid; gap: var(--space-md); width: 100%; }
+    @media (min-width: 768px) { .contact-demo { grid-template-columns: repeat(2, 1fr); } }
+    .contact-link { display: flex; align-items: center; gap: var(--space-sm); min-height: var(--space-touch-target); color: var(--color-on-surface-inverse); text-decoration: none; border-radius: var(--rounded-full); }
+    .contact-link__text { display: grid; min-width: 0; }
+    .contact-link__label { color: var(--color-secondary); }
+    .contact-link .icon-circle { flex: none; }
+    .contact-link:hover .icon-circle, .contact-link:focus-visible .icon-circle { background: var(--color-on-primary); color: var(--color-primary); }
+
+    /* back-link */
+    .back-link { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: var(--space-touch-target); color: var(--color-primary); text-decoration: none; transition: color var(--duration) var(--ease); }
+    .back-link svg { width: 18px; height: 18px; transition: transform var(--duration) var(--ease); }
+    .back-link:hover { color: var(--color-tertiary); }
+    .back-link:hover svg { transform: translateX(-4px); }
+
+    /* gallery (vista previa) */
+    .gallery-demo__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); margin-bottom: var(--space-md); }
+    .gallery-demo__controls { display: flex; align-items: center; gap: var(--space-sm); }
+    .btn-round { width: 48px; height: 48px; flex: none; display: grid; place-items: center; padding: 0; border: var(--space-divider) solid var(--color-tertiary); border-radius: var(--rounded-full); background: transparent; color: var(--color-tertiary); cursor: pointer; transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease); }
+    .btn-round:hover { background: var(--color-tertiary); color: var(--color-on-tertiary); }
+    .btn-round svg { width: 22px; height: 22px; }
+    .btn-round--dark { border-color: var(--color-secondary); color: var(--color-secondary); }
+    .btn-round--dark:hover { background: var(--color-secondary); color: var(--color-on-secondary); }
+    .gallery-demo__track { display: flex; gap: var(--space-md); overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px var(--space-md); scrollbar-width: thin; scrollbar-color: var(--color-primary) var(--color-surface-soft); }
+    .gallery-demo__track:focus-visible { outline-offset: -3px; }
+    .gallery-demo__track img { height: 260px; width: auto; flex: none; scroll-snap-align: start; border-radius: var(--rounded-md); }
+
+    /* image-viewer (vista previa) */
+    .viewer-demo { background: var(--color-surface-inverse); color: var(--color-on-surface-inverse); border-radius: var(--rounded-md); padding: var(--space-md); display: grid; gap: var(--space-md); }
+    .viewer-demo__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); }
+    .viewer-demo__controls { display: flex; gap: var(--space-sm); }
+    .viewer-demo img { height: 220px; width: auto; margin-inline: auto; border-radius: var(--rounded-md); }
+    .viewer-demo figcaption { color: var(--color-on-primary); text-align: center; }
+
+    /* project-feature */
+    .feature-demo { border: var(--space-divider) solid var(--color-primary); border-radius: var(--rounded-md); padding: var(--space-xl); display: grid; place-items: center; }
+    .feature-demo img { max-height: 120px; width: auto; }
+
+    /* siguiente proyecto */
+    .next-demo { border-top: var(--space-divider) solid var(--color-primary); padding-top: var(--space-lg); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md); }
+
+    /* footer-dark (vista previa) */
+    .footer-demo { background: var(--color-surface-inverse); color: var(--color-secondary); border-radius: var(--rounded-md); padding: var(--space-lg); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .footer-demo__brand { display: flex; align-items: center; gap: var(--space-sm); }
+    .footer-demo__brand .logo { height: 56px; }
+    .footer-demo p.t-meta { color: var(--color-on-primary); }
+
+    /* ============================================================
+       Reglas
+       ============================================================ */
+    .rules { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px) { .rules { grid-template-columns: repeat(2, 1fr); } }
+    .rules__col { background: var(--color-surface-inverse-soft); border-radius: var(--rounded-md); padding: var(--space-lg); }
+    .rules__title { color: var(--color-secondary); display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .rules__list { display: grid; gap: var(--space-sm); }
+    .rules__list li { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-sm); align-items: start; }
+    .rule-icon { width: 32px; height: 32px; border-radius: var(--rounded-full); display: grid; place-items: center; }
+    .rule-icon svg { width: 16px; height: 16px; }
+    .rule-icon--yes { background: var(--color-secondary); color: var(--color-primary); }
+    .rule-icon--no  { background: var(--color-on-primary); color: var(--color-primary); }
+
+    /* ============================================================
+       Footer
+       ============================================================ */
+    .footer { background: var(--color-surface); color: var(--color-primary); padding-block: var(--space-2xl); }
+    .footer__inner { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; justify-content: space-between; }
+    .footer__brand { display: flex; align-items: center; gap: var(--space-sm); }
+    .footer__brand .logo { height: 56px; }
+    .footer p { color: var(--color-on-surface); }
+
+    /* ============================================================
+       Toast (copiar)
+       ============================================================ */
+    .toast {
+      position: fixed; left: 50%; bottom: var(--space-md); z-index: 60;
+      transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+      background: var(--color-primary); color: var(--color-secondary); border: var(--space-divider) solid var(--color-secondary);
+      padding: var(--space-button-y) var(--space-md); border-radius: var(--rounded-full);
+      transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+    }
+    .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ============================================================
+       Aparición al hacer scroll
+       ============================================================ */
+    .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    .js .reveal.is-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+      .card-project:hover, .elev-card--live:hover { transform: none; }
+    }
+  </style>
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===================== Header ===================== -->
+  <header class="header is-on-hero" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="jv, sistema de diseño: ir al inicio">
+        <span class="brand__logo" aria-hidden="true">
+          <img class="logo logo--claro" src="assets/img/logo-jv-claro.png" alt="" width="524" height="755">
+          <img class="logo logo--oscuro" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">jv</span>
+          <span class="brand__tag">Sistema de diseño</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Secciones del sistema">
+        <ul class="nav__list" role="list">
+          <li><a class="nav-link t-label" href="#marca">Marca</a></li>
+          <li><a class="nav-link t-label" href="#colores">Colores</a></li>
+          <li><a class="nav-link t-label" href="#tipografia">Tipografía</a></li>
+          <li><a class="nav-link t-label" href="#layout">Layout</a></li>
+          <li><a class="nav-link t-label" href="#elevacion">Elevación</a></li>
+          <li><a class="nav-link t-label" href="#formas">Formas</a></li>
+          <li><a class="nav-link t-label" href="#componentes">Componentes</a></li>
+          <li><a class="nav-link t-label" href="#reglas">Reglas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- ===================== Hero ===================== -->
+    <section class="hero on-dark" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__logo reveal"><img class="logo" src="assets/img/logo-jv-claro.png" alt="" width="524" height="755"></div>
+        <div class="reveal">
+          <p class="t-label chip" style="margin-bottom: var(--space-md);">DESIGN.md · versión alpha</p>
+          <h1 class="t-display hero__title" id="hero-title" tabindex="-1">Sistema de diseño jv</h1>
+          <p class="t-sub hero__sub">Alegre, orgánico y extrovertido.</p>
+          <p class="t-body hero__lead">La referencia visual del portafolio de Javier Valencia: formas suaves y redondeadas, mucho aire y un contraste claro entre el verde profundo y el fondo hueso. El diseño luce los proyectos, no compite con ellos.</p>
+          <div class="hero__actions">
+            <a class="btn btn--dark" href="#componentes">Ver componentes</a>
+            <a class="btn btn--dark" href="DESIGN.md" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+              Descargar DESIGN.md
+            </a>
+          </div>
+          <ul class="hero__stats" role="list" aria-label="Resumen de tokens">
+            <li class="chip t-label">13 colores</li>
+            <li class="chip t-label">12 estilos de texto</li>
+            <li class="chip t-label">3 radios</li>
+            <li class="chip t-label">55 componentes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Marca ===================== -->
+    <section class="section section--light" id="marca" aria-labelledby="marca-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">01 · Overview</p>
+          <h2 class="t-heading section__title" id="marca-title">Marca</h2>
+          <p class="t-sub section__sub">Un trazo continuo, hecho a mano como una firma.</p>
+          <p class="t-body">jv es un monograma caligráfico que forma las letras «jv» de Javier Valencia. No hay símbolo aparte: el propio trazo es la marca, y sus curvas y su grosor uniforme son el origen de todo lo orgánico del sistema.</p>
+        </header>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Versiones del logotipo</h3>
+          <div class="grid-2">
+            <figure class="logo-tile logo-tile--dark reveal">
+              <div class="logo-tile__art"><img class="logo" src="assets/img/logo-jv-claro.png" alt="Logotipo jv en verde claro sobre verde fuerte" width="524" height="755"></div>
+              <figcaption class="logo-tile__caption">
+                <span class="t-card">Versión oscura</span>
+                <span class="t-label">#ADF3AF sobre #004804</span>
+              </figcaption>
+            </figure>
+            <figure class="logo-tile logo-tile--light reveal">
+              <div class="logo-tile__art"><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="Logotipo jv en verde fuerte sobre verde claro" width="524" height="755"></div>
+              <figcaption class="logo-tile__caption">
+                <span class="t-card">Versión clara</span>
+                <span class="t-label">#004804 sobre #ADF3AF</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Uso del nombre</h3>
+          <div class="grid-3">
+            <article class="box box--filled reveal">
+              <span class="t-label box__kicker">La marca</span>
+              <p class="name-sample">jv</p>
+              <p class="t-body">El logotipo y la firma visual del portafolio.</p>
+            </article>
+            <article class="box box--filled reveal">
+              <span class="t-label box__kicker">Nombre formal</span>
+              <p class="name-sample">Javier Valencia</p>
+              <p class="t-body">En el CV, en la presentación formal y cuando el tono es serio. En el CV siempre aparece así.</p>
+            </article>
+            <article class="box box--filled reveal">
+              <span class="t-label box__kicker">Trato informal</span>
+              <p class="name-sample">jav</p>
+              <p class="t-body">Para un saludo o un tono cercano. Nunca como nombre en el CV.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Colores ===================== -->
+    <section class="section section--dark on-dark" id="colores" aria-labelledby="colores-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">02 · Colors</p>
+          <h2 class="t-heading section__title" id="colores-title">Colores</h2>
+          <p class="t-sub section__sub">Dos verdes de marca, un rojo de acento y una base cálida.</p>
+          <p class="t-body">Todos los colores son planos: no se usa ningún degradado. Haz clic en una muestra para copiar su código.</p>
+        </header>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Paleta</h3>
+          <ul class="swatches" role="list">
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-primary);" data-copy="#004804" aria-label="Copiar #004804, verde fuerte"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Verde fuerte</p>
+                <p class="swatch__row"><span class="swatch__hex">#004804</span><code class="t-mono swatch__token">{colors.primary}</code></p>
+                <p class="t-meta swatch__role">Color principal. Títulos en secciones claras, fondos oscuros, borde de tarjetas de proyecto y relleno de píldoras sobre hueso.</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-secondary);" data-copy="#ADF3AF" aria-label="Copiar #ADF3AF, verde claro"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Verde claro</p>
+                <p class="swatch__row"><span class="swatch__hex">#ADF3AF</span><code class="t-mono swatch__token">{colors.secondary}</code></p>
+                <p class="t-meta swatch__role">Título del hero; títulos, bordes y botones sobre verde fuerte. Nunca como texto sobre hueso.</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-tertiary);" data-copy="#FF1542" aria-label="Copiar #FF1542, rojo"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Rojo</p>
+                <p class="swatch__row"><span class="swatch__hex">#FF1542</span><code class="t-mono swatch__token">{colors.tertiary}</code></p>
+                <p class="t-meta swatch__role">Acento. Botones en secciones claras, hover y enlace activo. Con moderación.</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-neutral);" data-copy="#FFF8EB" aria-label="Copiar #FFF8EB, hueso"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Hueso</p>
+                <p class="swatch__row"><span class="swatch__hex">#FFF8EB</span><code class="t-mono swatch__token">{colors.neutral}</code></p>
+                <p class="t-meta swatch__role">Fondo del sitio y del header (surface) y texto de cuerpo sobre verde fuerte (on-primary).</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-on-surface);" data-copy="#111111" aria-label="Copiar #111111, casi negro"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Casi negro</p>
+                <p class="swatch__row"><span class="swatch__hex">#111111</span><code class="t-mono swatch__token">{colors.on-surface}</code></p>
+                <p class="t-meta swatch__role">Texto de cuerpo sobre hueso y sobre verde suave. Nunca negro puro.</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-surface-soft);" data-copy="#EAF7E4" aria-label="Copiar #EAF7E4, verde suave"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Verde suave</p>
+                <p class="swatch__row"><span class="swatch__hex">#EAF7E4</span><code class="t-mono swatch__token">{colors.surface-soft}</code></p>
+                <p class="t-meta swatch__role">Relleno de recuadros y tarjetas de experiencia en secciones hueso. No se usa en píldoras.</p>
+              </div>
+            </li>
+            <li class="swatch reveal">
+              <button class="swatch__chip" type="button" style="background: var(--color-surface-inverse-soft);" data-copy="#0E6012" aria-label="Copiar #0E6012, verde medio"><span class="swatch__copyhint t-label" aria-hidden="true">Copiar</span></button>
+              <div class="swatch__body">
+                <p class="t-card swatch__name">Verde medio</p>
+                <p class="swatch__row"><span class="swatch__hex">#0E6012</span><code class="t-mono swatch__token">{colors.surface-inverse-soft}</code></p>
+                <p class="t-meta swatch__role">Relleno de recuadros y píldoras en secciones verde fuerte. Títulos en verde claro y texto en hueso.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Combinaciones de contraste</h3>
+          <p class="t-body reveal" style="margin-bottom: var(--space-md); max-width: 720px;">El contraste se calcula en vivo con los colores de los tokens. El mínimo para texto normal es 4.5:1 y para texto grande, 3:1.</p>
+          <div class="pairs-panel reveal">
+          <ul class="pairs" role="list">
+            <li class="pair" style="background: var(--color-surface); color: var(--color-primary);" data-fg="#004804" data-bg="#FFF8EB">
+              <p class="pair__sample">Títulos</p>
+              <div class="pair__meta"><span class="t-label">Verde fuerte / hueso</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-surface); color: var(--color-on-surface);" data-fg="#111111" data-bg="#FFF8EB">
+              <p class="pair__sample">Cuerpo</p>
+              <div class="pair__meta"><span class="t-label">Casi negro / hueso</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-surface); color: var(--color-tertiary);" data-fg="#FF1542" data-bg="#FFF8EB" data-large>
+              <p class="pair__sample">Botón</p>
+              <div class="pair__meta"><span class="t-label" style="color: var(--color-primary);">Rojo / hueso · solo texto grande</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-primary); color: var(--color-secondary);" data-fg="#ADF3AF" data-bg="#004804">
+              <p class="pair__sample">Títulos</p>
+              <div class="pair__meta"><span class="t-label">Verde claro / verde fuerte</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-primary); color: var(--color-on-primary);" data-fg="#FFF8EB" data-bg="#004804">
+              <p class="pair__sample">Cuerpo</p>
+              <div class="pair__meta"><span class="t-label">Hueso / verde fuerte</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-surface-soft); color: var(--color-primary);" data-fg="#004804" data-bg="#EAF7E4">
+              <p class="pair__sample">Recuadro</p>
+              <div class="pair__meta"><span class="t-label">Verde fuerte / verde suave</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-primary); color: var(--color-secondary);" data-fg="#ADF3AF" data-bg="#0E6012">
+              <p class="pair__sample" style="background: var(--color-surface-inverse-soft); border-radius: var(--rounded-sm); padding: var(--space-xs) var(--space-sm); justify-self: start;">Recuadro</p>
+              <div class="pair__meta"><span class="t-label">Verde claro / verde medio</span><span class="badge" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-surface); color: var(--color-secondary);" data-fg="#ADF3AF" data-bg="#FFF8EB" data-forbidden>
+              <p class="pair__sample">Prohibido</p>
+              <div class="pair__meta"><span class="t-label" style="color: var(--color-primary);">Verde claro / hueso · casi no se ve</span><span class="badge badge--no" data-ratio></span></div>
+            </li>
+            <li class="pair" style="background: var(--color-primary); color: var(--color-tertiary);" data-fg="#FF1542" data-bg="#004804" data-forbidden>
+              <p class="pair__sample">Prohibido</p>
+              <div class="pair__meta"><span class="t-label" style="color: var(--color-secondary);">Rojo / verde fuerte · vibran</span><span class="badge badge--no" data-ratio></span></div>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Tipografía ===================== -->
+    <section class="section section--light" id="tipografia" aria-labelledby="tipografia-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">03 · Typography</p>
+          <h2 class="t-heading section__title" id="tipografia-title">Tipografía</h2>
+          <p class="t-sub section__sub">La jerarquía nace del contraste entre Bold y Light.</p>
+          <p class="t-body">Dos familias sans serif de licencia libre (Google Fonts), incluidas en el proyecto como .woff2.</p>
+        </header>
+
+        <div class="block">
+          <div class="families">
+            <article class="box box--filled family reveal">
+              <span class="t-label box__kicker">Títulos · <code class="t-mono">{typography.display}</code></span>
+              <p class="family__aa family__aa--urbanist" aria-hidden="true">Aa</p>
+              <h3 class="t-card box__title">Urbanist</h3>
+              <p class="t-body">Geométrica, con curvas muy redondas que acompañan el trazo del logo.</p>
+              <ul class="family__weights" role="list">
+                <li class="weight-pill t-label" style="font-family: var(--font-display); font-weight: 300;">Light 300</li>
+                <li class="weight-pill t-label" style="font-family: var(--font-display); font-weight: 700;">Bold 700</li>
+              </ul>
+              <p class="family__chars" style="font: 300 22px/1.4 var(--font-display);">ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 ¿?¡!</p>
+            </article>
+            <article class="box box--filled family reveal">
+              <span class="t-label box__kicker">Lectura · <code class="t-mono">{typography.body}</code></span>
+              <p class="family__aa family__aa--inter" aria-hidden="true">Aa</p>
+              <h3 class="t-card box__title">Inter</h3>
+              <p class="t-body">Neutra, clara y muy legible en pantalla.</p>
+              <ul class="family__weights" role="list">
+                <li class="weight-pill t-label" style="font-weight: 400;">Regular 400</li>
+                <li class="weight-pill t-label" style="font-weight: 500;">Medium 500</li>
+              </ul>
+              <p class="family__chars" style="font: 400 18px/1.5 var(--font-body);">ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 ¿?¡!</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Escala</h3>
+          <div class="segmented reveal" role="group" aria-label="Ver tamaños de">
+            <button type="button" class="t-label" aria-pressed="true" data-mode="desktop">Computadora</button>
+            <button type="button" class="t-label" aria-pressed="false" data-mode="mobile">Celular</button>
+          </div>
+
+          <div class="scale" data-mode="desktop" id="scale">
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Display</span><code class="t-mono">{typography.display}</code><span class="t-meta scale__specs">Urbanist Bold · <span class="size-value" data-d="64px" data-m="40px">64px</span> · 1.1 · +2%</span></div>
+              <p class="scale__sample" data-size="display">Sistema jv</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Heading</span><code class="t-mono">{typography.heading}</code><span class="t-meta scale__specs">Urbanist Bold · <span class="size-value" data-d="44px" data-m="32px">44px</span> · 1.15 · +2%</span></div>
+              <p class="scale__sample" data-size="heading">Proyectos</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Subheading</span><code class="t-mono">{typography.subheading}</code><span class="t-meta scale__specs">Urbanist Light · 28px · 1.3</span></div>
+              <p class="scale__sample" data-size="sub">Diseño orgánico, con mucho aire</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Title card</span><code class="t-mono">{typography.title-card}</code><span class="t-meta scale__specs">Urbanist Bold · 22px · 1.3 · +2%</span></div>
+              <p class="scale__sample" data-size="card">Diseñador de interfaces</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Body</span><code class="t-mono">{typography.body}</code><span class="t-meta scale__specs">Inter Regular · <span class="size-value" data-d="18px" data-m="16px">18px</span> · 1.6</span></div>
+              <p class="scale__sample scale__sample--body" data-size="body">Me gusta el diseño orgánico, los contrastes fuertes y el minimalismo. Este portafolio junta las tres cosas.</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Label</span><code class="t-mono">{typography.label}</code><span class="t-meta scale__specs">Inter Medium · 14px · 1.4 · +4%</span></div>
+              <p class="scale__sample" data-size="label">Branding · Diseño web</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Meta</span><code class="t-mono">{typography.meta}</code><span class="t-meta scale__specs">Inter Regular · 14px · 1.4</span></div>
+              <p class="scale__sample scale__sample--meta" data-size="meta">Ciudad de México · 2024 – actualidad</p>
+            </div>
+            <div class="scale__row reveal">
+              <div class="scale__meta"><span class="t-label">Button</span><code class="t-mono">{typography.button}</code><span class="t-meta scale__specs">Urbanist Bold · 19px+ · 1 · +4%</span></div>
+              <p class="scale__sample" data-size="button">Ver proyecto</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hierarchy box box--filled reveal">
+          <span class="t-label box__kicker">Jerarquía en acción</span>
+          <p class="t-heading hierarchy__title">Sobre mí</p>
+          <p class="t-sub hierarchy__sub">Diseño que acompaña, no que compite.</p>
+          <p class="t-body hierarchy__body">El título pesado en mayúsculas y el subtítulo ligero justo debajo crean la diferencia. El cuerpo en Inter mantiene la lectura cómoda y neutra.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Layout ===================== -->
+    <section class="section section--dark on-dark" id="layout" aria-labelledby="layout-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">04 · Layout</p>
+          <h2 class="t-heading section__title" id="layout-title">Layout y espaciado</h2>
+          <p class="t-sub section__sub">Unidad de 8px y mucho aire.</p>
+          <p class="t-body">Contenido de máximo 1200px, centrado, con 24px de margen lateral y un header fijo de 80px.</p>
+        </header>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Escala de espaciado</h3>
+          <ul class="space-list" role="list">
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">xs · unit</span><code class="t-mono">8px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-xs);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">sm</span><code class="t-mono">16px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-sm);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">md · gutter</span><code class="t-mono">24px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-md);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">lg</span><code class="t-mono">32px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-lg);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">xl</span><code class="t-mono">48px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-xl);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">2xl · section-mobile</span><code class="t-mono">64px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-2xl);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">header-height</span><code class="t-mono">80px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-header-height);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">section-tablet</span><code class="t-mono">96px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-section-tablet);"></span></span></li>
+            <li class="space-row reveal"><span class="space-row__label"><span class="t-label">section</span><code class="t-mono">120px</code></span><span class="space-row__track"><span class="space-bar" style="display:block; width: var(--space-section);"></span></span></li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Rellenos internos</h3>
+          <div class="padding-demo">
+            <div class="pad-sample reveal">
+              <span class="btn btn--dark" aria-hidden="true">Botón</span>
+              <span class="t-label">14px × 32px</span>
+            </div>
+            <div class="pad-sample reveal" style="padding: var(--space-md);">
+              <span class="pad-sample__inner t-label">Tarjeta</span>
+              <span class="t-label">24px por todos lados</span>
+            </div>
+            <div class="pad-sample reveal" style="padding: var(--space-lg);">
+              <span class="pad-sample__inner t-label">Recuadro</span>
+              <span class="t-label">32px por todos lados</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="t-card block__title reveal">Puntos de quiebre</h3>
+          <div class="bp-grid">
+            <article class="bp reveal">
+              <h4 class="t-card bp__title">Celular</h4>
+              <div class="bp__demo bp__demo--1" aria-hidden="true"><span></span><span></span></div>
+              <dl class="t-meta">
+                <dt>Ancho</dt><dd>&lt; 768px</dd>
+                <dt>Columnas</dt><dd>1</dd>
+                <dt>Entre secciones</dt><dd>64px</dd>
+                <dt>Menú</dt><dd>Hamburguesa</dd>
+              </dl>
+            </article>
+            <article class="bp reveal">
+              <h4 class="t-card bp__title">Tablet</h4>
+              <div class="bp__demo bp__demo--2" aria-hidden="true"><span></span><span></span></div>
+              <dl class="t-meta">
+                <dt>Ancho</dt><dd>768 – 1023px</dd>
+                <dt>Columnas</dt><dd>2</dd>
+                <dt>Entre secciones</dt><dd>96px</dd>
+              </dl>
+            </article>
+            <article class="bp reveal">
+              <h4 class="t-card bp__title">Computadora</h4>
+              <div class="bp__demo bp__demo--3" aria-hidden="true"><span></span><span></span><span></span></div>
+              <dl class="t-meta">
+                <dt>Ancho</dt><dd>≥ 1024px</dd>
+                <dt>Columnas</dt><dd>3</dd>
+                <dt>Entre secciones</dt><dd>120px</dd>
+                <dt>Contenido</dt><dd>máx. 1200px</dd>
+              </dl>
+            </article>
+          </div>
+          <p class="t-meta reveal" style="margin-top: var(--space-md);">Botones e íconos miden mínimo 44px para tocarlos cómodamente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Elevación ===================== -->
+    <section class="section section--light" id="elevacion" aria-labelledby="elevacion-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">05 · Elevation &amp; Depth</p>
+          <h2 class="t-heading section__title" id="elevacion-title">Elevación</h2>
+          <p class="t-sub section__sub">Plano por regla, con una sola excepción.</p>
+          <p class="t-body">La profundidad se logra con el color de fondo y con el relleno de los recuadros. La única sombra del sistema aparece en las tarjetas de proyecto al pasar el cursor.</p>
+        </header>
+        <div class="elev-grid">
+          <div class="planes reveal" role="img" aria-label="Dos planos separados solo por color: hueso con contorno y verde fuerte">
+            <div class="planes__light"><span class="t-label">Plano 1</span><span class="t-card">Hueso</span></div>
+            <div class="planes__dark"><span class="t-label">Plano 2</span><span class="t-card">Verde fuerte</span></div>
+          </div>
+          <div class="elev-card elev-card--live reveal" tabindex="0" aria-label="Ejemplo de sombra: pasa el cursor o enfoca esta tarjeta">
+            <div>
+              <p class="t-label" style="color: var(--color-primary);">Tarjeta de proyecto · hover</p>
+              <p class="t-card elev-card__title" style="margin-top: var(--space-xs);">Pasa el cursor</p>
+            </div>
+            <div style="display: grid; gap: var(--space-xs);">
+              <p class="t-meta">Borde de 2px. Se levanta 6px con una sombra suave, como si flotara.</p>
+              <code class="t-mono code">0 12px 32px rgba(0, 72, 4, 0.15)</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Formas ===================== -->
+    <section class="section section--dark on-dark" id="formas" aria-labelledby="formas-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">06 · Shapes</p>
+          <h2 class="t-heading section__title" id="formas-title">Formas</h2>
+          <p class="t-sub section__sub">Todo va redondeado. No hay esquinas rectas.</p>
+          <p class="t-body">Solo recuadros redondeados: nada de manchas, ondas ni formas libres.</p>
+        </header>
+
+        <ul class="radii" role="list">
+          <li class="radius reveal">
+            <div class="radius__shape radius__shape--sm"><span class="t-label">16px</span></div>
+            <p class="t-card radius__name">rounded.sm</p>
+            <p class="t-meta">Imágenes dentro de tarjetas.</p>
+          </li>
+          <li class="radius reveal">
+            <div class="radius__shape radius__shape--md"><span class="t-label">24px</span></div>
+            <p class="t-card radius__name">rounded.md</p>
+            <p class="t-meta">Tarjetas, recuadros y fotos.</p>
+          </li>
+          <li class="radius reveal">
+            <div class="radius__shape radius__shape--full"><span class="t-label">Píldora</span></div>
+            <p class="t-card radius__name">rounded.full</p>
+            <p class="t-meta">Botones y puntas de separadores.</p>
+          </li>
+          <li class="radius reveal">
+            <div class="radius__shape radius__shape--circle"><span class="t-label">Círculo</span></div>
+            <p class="t-card radius__name">rounded.full</p>
+            <p class="t-meta">Íconos, números y pasos.</p>
+          </li>
+        </ul>
+
+        <div class="nested">
+          <div class="nested__card reveal" aria-hidden="true">
+            <div class="nested__img"><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755"></div>
+            <p class="t-label" style="color: var(--color-primary); margin-top: var(--space-sm);">Esquinas anidadas</p>
+          </div>
+          <div class="nested__legend reveal">
+            <h3 class="t-card" style="color: var(--color-secondary);">Esquinas anidadas</h3>
+            <p class="legend-item t-body"><span class="legend-dot" aria-hidden="true">24</span>La tarjeta usa 24px.</p>
+            <p class="legend-item t-body"><span class="legend-dot" aria-hidden="true">16</span>La imagen interior usa 16px, un poco menos, para que las curvas queden paralelas.</p>
+            <hr class="divider" style="margin: var(--space-sm) 0;">
+            <p class="t-meta">Separador: línea sólida de 2px con puntas redondeadas.</p>
+          </div>
+        </div>
+
+        <div class="variants">
+          <h3 class="t-card block__title reveal">Recuadros: siempre rellenos</h3>
+          <p class="t-body reveal" style="margin-bottom: var(--space-md); max-width: 720px;">El borde sin relleno es de los botones. Los recuadros van rellenos y sin borde: verde suave en secciones hueso y verde medio en secciones verdes. La única excepción son las tarjetas de proyecto, que conservan su borde.</p>
+          <div class="grid-2">
+            <div class="box box--filled box--demo-light reveal">
+              <span class="t-label box__kicker">info-box · sección hueso</span>
+              <p class="t-card box__title">Verde suave</p>
+              <p class="t-body">Fondo #EAF7E4, sin borde. Títulos en verde fuerte y texto en casi negro.</p>
+              <p style="margin-top: var(--space-sm);"><span class="tag t-label" style="background: var(--color-primary);">Píldora · verde fuerte</span></p>
+            </div>
+            <div class="box box--filled reveal">
+              <span class="t-label box__kicker">info-box-dark · sección verde</span>
+              <p class="t-card box__title">Verde medio</p>
+              <p class="t-body">Fondo #0E6012, sin borde. Títulos en verde claro y texto en hueso.</p>
+            </div>
+          </div>
+          <p class="t-meta reveal" style="margin-top: var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center;"><span class="tag t-label">Píldora · verde medio</span> Sobre el verde fuerte de la sección, las píldoras usan el verde medio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Componentes ===================== -->
+    <section class="section section--light" id="componentes" aria-labelledby="componentes-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">07 · Components</p>
+          <h2 class="t-heading section__title" id="componentes-title">Componentes</h2>
+          <p class="t-sub section__sub">Piezas que se repiten en todo el portafolio.</p>
+          <p class="t-body">Todos los cambios al pasar el cursor duran 0.3 s con curva ease-out.</p>
+        </header>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Botón o recuadro</h3>
+          <div class="grid-2">
+            <div class="compare reveal">
+              <p class="t-label compare__label">Se puede pulsar · solo contorno</p>
+              <div class="compare__row">
+                <a class="btn btn--light" href="#componentes">Ver proyecto</a>
+              </div>
+              <p class="t-meta">Los botones llevan borde sin relleno y se rellenan al pasar el cursor. Las únicas otras piezas con borde son la tarjeta de proyecto sobre hueso, los marcos de imagen y los círculos vacíos de nivel; ninguna lleva texto que parezca botón.</p>
+            </div>
+            <div class="compare reveal">
+              <p class="t-label compare__label">No se pulsa · relleno, sin borde</p>
+              <div class="compare__row">
+                <span class="tag t-label">Branding</span>
+                <span class="tag t-label">Diseño web</span>
+              </div>
+              <div class="box box--filled">
+                <p class="t-card box__title">Recuadro de información</p>
+                <p class="t-body">Recuadros y píldoras van rellenos. Las píldoras usan verde fuerte sobre hueso y verde medio sobre verde fuerte.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Botones</h3>
+          <div class="grid-2">
+            <div class="stage stage--light reveal">
+              <p class="t-label stage__note">button-light · sección hueso</p>
+              <a class="btn btn--light" href="#componentes">Ver proyecto</a>
+              <span class="btn btn--light is-hover" aria-hidden="true">Hover</span>
+            </div>
+            <div class="stage stage--dark on-dark reveal">
+              <p class="t-label stage__note">button-dark · sección verde fuerte</p>
+              <a class="btn btn--dark" href="#componentes">Contáctame</a>
+              <span class="btn btn--dark is-hover" aria-hidden="true">Hover</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Navegación</h3>
+          <div class="stage stage--light reveal">
+            <p class="t-label stage__note">nav-link · reposo, hover y sección activa en rojo</p>
+            <ul class="demo-nav" role="list" aria-label="Ejemplo de navegación">
+              <li><a class="nav-link t-label" href="#componentes">Inicio</a></li>
+              <li><a class="nav-link t-label" href="#componentes">Sobre mí</a></li>
+              <li><a class="nav-link t-label" href="#componentes" aria-current="true">Proyectos</a></li>
+              <li><a class="nav-link t-label" href="#componentes">Experiencia</a></li>
+              <li><a class="nav-link t-label" href="#componentes">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Tarjetas de proyecto</h3>
+          <ul class="projects" role="list">
+            <li class="reveal">
+              <a class="card-project" href="#componentes">
+                <div class="card-project__media"><div class="card-project__img card-project__img--a"><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755"></div></div>
+                <p class="t-label card-project__category">Branding</p>
+                <h4 class="t-card card-project__title">Identidad jv</h4>
+              </a>
+            </li>
+            <li class="reveal">
+              <a class="card-project" href="#componentes">
+                <div class="card-project__media"><div class="card-project__img card-project__img--b"><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755"></div></div>
+                <p class="t-label card-project__category">Diseño web</p>
+                <h4 class="t-card card-project__title">Portafolio</h4>
+              </a>
+            </li>
+            <li class="reveal">
+              <a class="card-project" href="#componentes">
+                <div class="card-project__media"><div class="card-project__img card-project__img--c"><img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755"></div></div>
+                <p class="t-label card-project__category">Sistema de diseño</p>
+                <h4 class="t-card card-project__title">DESIGN.md</h4>
+              </a>
+            </li>
+          </ul>
+          <p class="t-meta reveal">El logo va en un marco con borde verde fuerte de 2px y sin relleno. Al pasar el cursor: la tarjeta se levanta 6px, aparece la sombra y la imagen crece a 1.04× dentro del marco.</p>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Experiencia</h3>
+          <ol class="experience" role="list" aria-label="Ejemplo de experiencia, de lo más reciente a lo más antiguo">
+            <li class="card-experience reveal">
+              <div>
+                <h4 class="t-card card-experience__title">Diseñador de interfaces</h4>
+                <p class="t-meta card-experience__meta">Estudio de diseño · Ciudad de México</p>
+              </div>
+              <p class="t-label card-experience__time">2024 – actualidad</p>
+            </li>
+            <li class="card-experience reveal">
+              <div>
+                <h4 class="t-card card-experience__title">Practicante de diseño</h4>
+                <p class="t-meta card-experience__meta">Agencia creativa · Guadalajara</p>
+              </div>
+              <p class="t-label card-experience__time">2023 – 2024</p>
+            </li>
+          </ol>
+          <p class="t-meta reveal">Contenido de ejemplo.</p>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Recuadros de información</h3>
+          <div class="grid-2">
+            <div class="box box--filled reveal">
+              <p class="t-card box__title">En sección hueso</p>
+              <p class="t-body">Fondo verde suave, sin borde, esquinas de 24px y 32px de relleno.</p>
+            </div>
+            <div class="box reveal" style="background: var(--color-surface-inverse-soft); color: var(--color-on-surface-inverse);">
+              <p class="t-card box__title" style="color: var(--color-secondary);">En sección verde</p>
+              <p class="t-body">Fondo verde medio, título en verde claro y texto en hueso.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Contacto, números y pasos</h3>
+          <div class="grid-2">
+            <div class="stage stage--light reveal">
+              <p class="t-label stage__note">icon-circle · 48px · se invierte al pasar el cursor</p>
+              <ul class="icons" role="list">
+                <li><a class="icon-circle" href="#componentes" aria-label="Correo (ejemplo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></a></li>
+                <li><a class="icon-circle" href="#componentes" aria-label="Teléfono (ejemplo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M11 18h2"/></svg></a></li>
+                <li><a class="icon-circle" href="#componentes" aria-label="Sitio web (ejemplo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></a></li>
+                <li><a class="icon-circle" href="#componentes" aria-label="Ubicación (ejemplo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></a></li>
+                <li><span class="icon-circle is-hover" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></span></li>
+              </ul>
+            </div>
+            <div class="stage stage--light reveal">
+              <p class="t-label stage__note">Números y pasos en círculos rellenos</p>
+              <ol class="steps" role="list" aria-label="Ejemplo de pasos">
+                <li class="step">1</li>
+                <li class="step">2</li>
+                <li class="step">3</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Nivel de software y dato destacado</h3>
+          <div class="demo-grid">
+            <div class="box box--filled reveal">
+              <span class="t-label box__kicker">level-dot · level-dot-empty</span>
+              <p class="t-card box__title">Software</p>
+              <ul class="rows" role="list">
+                <li class="row"><span class="t-body">Illustrator</span><span class="dots" role="img" aria-label="Nivel 4 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span></span></li>
+                <li class="row"><span class="t-body">InDesign</span><span class="dots" role="img" aria-label="Nivel 3 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span><span class="dot"></span></span></li>
+                <li class="row"><span class="t-body">Maya</span><span class="dots" role="img" aria-label="Nivel 2 de 5"><span class="dot dot--on"></span><span class="dot dot--on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></li>
+              </ul>
+            </div>
+            <div class="box box--filled reveal">
+              <span class="t-label box__kicker">body-strong · card-experience-place</span>
+              <p class="t-card box__title">Educación</p>
+              <p class="strong">Licenciatura en Diseño Gráfico Digital</p>
+              <p class="t-meta">Universidad La Salle · 2023 – Ahora</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Sobre verde fuerte: tarjeta de proyecto y contacto</h3>
+          <div class="demo-grid">
+            <div class="stage stage--dark on-dark reveal">
+              <p class="t-label stage__note">card-project-dark · hueso, sin borde, sombra casi negra</p>
+              <div class="projects-demo">
+                <a class="card-project card-project--dark" href="proyectos/kroxi.html">
+                  <div class="card-project__media"><div class="card-project__img card-project__img--a"><img class="logo" src="assets/img/web/logos/kroxi.png" alt="" style="height:auto; width:70%; aspect-ratio:auto;"></div></div>
+                  <span class="tag t-label">Reconocimiento a! diseño</span>
+                  <p class="t-label card-project__category">Empaque / Identidad gráfica</p>
+                  <h4 class="t-card card-project__title">Kroxi</h4>
+                </a>
+              </div>
+            </div>
+            <div class="stage stage--dark on-dark reveal">
+              <p class="t-label stage__note">contact-link · el círculo pasa a hueso al pasar el cursor</p>
+              <ul class="contact-demo" role="list">
+                <li><a class="contact-link" href="#componentes"><span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></span><span class="contact-link__text"><span class="t-label contact-link__label">Correo</span><span class="t-body">correo@ejemplo.com</span></span></a></li>
+                <li><a class="contact-link" href="#componentes"><span class="icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></span><span class="contact-link__text"><span class="t-label contact-link__label">Instagram</span><span class="t-body">@usuario</span></span></a></li>
+              </ul>
+              <p class="t-meta" style="width:100%;"><span class="tag t-label tag-dark">Píldora · verde medio</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="block comp">
+          <h3 class="t-card block__title reveal">Página de proyecto</h3>
+          <div class="reveal" style="display:grid; gap: var(--space-xl);">
+            <div>
+              <p class="t-label stage__note" style="color: var(--color-primary); margin-bottom: var(--space-xs);">back-link</p>
+              <a class="back-link t-label" href="#componentes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Volver a proyectos</a>
+            </div>
+
+            <div>
+              <div class="gallery-demo__bar">
+                <p class="t-label" style="color: var(--color-primary);">gallery-image · gallery-arrow</p>
+                <div class="gallery-demo__controls" aria-hidden="true">
+                  <span class="btn-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></span>
+                  <span class="t-label" style="color: var(--color-primary);">1 / 3</span>
+                  <span class="btn-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span>
+                </div>
+              </div>
+              <div class="gallery-demo__track" tabindex="0" role="region" aria-label="Ejemplo de galería horizontal">
+                <img src="assets/img/web/kroxi/01.png" alt="Bolsa de Kroxi sabor chile con cacao" loading="lazy">
+                <img src="assets/img/web/kroxi/02.png" alt="Bolsa de Kroxi sabor chipotle con miel de agave" loading="lazy">
+                <img src="assets/img/web/kroxi/03.png" alt="Bolsa de Kroxi sabor sal y limón" loading="lazy">
+                <img src="assets/img/web/kroxi/04.jpg" alt="Las tres bolsas de Kroxi juntas" loading="lazy">
+              </div>
+              <p class="t-meta">Directo sobre el hueso, misma altura, esquinas de 24px. Las flechas de esta vista previa son decorativas; la galería real funciona en <a href="proyectos/kroxi.html">la página de Kroxi</a>.</p>
+            </div>
+
+            <div class="demo-grid">
+              <div>
+                <p class="t-label" style="color: var(--color-primary); margin-bottom: var(--space-sm);">image-viewer · image-viewer-arrow</p>
+                <figure class="viewer-demo" aria-label="Vista previa del visor de imagen">
+                  <div class="viewer-demo__bar">
+                    <span class="t-label" style="color: var(--color-secondary);">2 / 4</span>
+                    <span class="viewer-demo__controls" aria-hidden="true"><span class="btn-round btn-round--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></span><span class="btn-round btn-round--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span><span class="btn-round btn-round--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span>
+                  </div>
+                  <img src="assets/img/web/kroxi/02.png" alt="" loading="lazy">
+                  <figcaption class="t-meta">Descripción de la imagen en hueso.</figcaption>
+                </figure>
+              </div>
+              <div>
+                <p class="t-label" style="color: var(--color-primary); margin-bottom: var(--space-sm);">project-feature · proyecto sin galería</p>
+                <figure class="feature-demo"><img src="assets/img/web/logos/big-hero-6.png" alt="Logotipo de Big Hero 6 en un marco de imagen" loading="lazy"></figure>
+              </div>
+            </div>
+
+            <div class="next-demo">
+              <div>
+                <p class="t-label" style="color: var(--color-primary);">Siguiente proyecto</p>
+                <p class="t-card" style="color: var(--color-primary); margin-top: 4px;">Air Canada</p>
+              </div>
+              <a class="btn btn--light" href="proyectos/air-canada.html">Ver proyecto<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+
+            <div>
+              <p class="t-label" style="color: var(--color-primary); margin-bottom: var(--space-sm);">footer-dark · pie de página de los proyectos</p>
+              <div class="footer-demo on-dark">
+                <div class="footer-demo__brand">
+                  <img class="logo" src="assets/img/logo-jv-claro.png" alt="" width="524" height="755">
+                  <div><p class="t-card">Javier Valencia</p><p class="t-meta">Diseñador gráfico</p></div>
+                </div>
+                <a class="btn btn--dark" href="#inicio">Volver arriba</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Reglas ===================== -->
+    <section class="section section--dark on-dark" id="reglas" aria-labelledby="reglas-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow t-label">08 · Do's and Don'ts</p>
+          <h2 class="t-heading section__title" id="reglas-title">Reglas</h2>
+          <p class="t-sub section__sub">Lo que sí y lo que no.</p>
+        </header>
+        <div class="rules">
+          <div class="rules__col reveal">
+            <h3 class="t-card rules__title"><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Sí</h3>
+            <ul class="rules__list t-body" role="list">
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Alternar secciones hueso y verde fuerte para generar contraste.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Redondear todo: botones en píldora, recuadros con 24px, imágenes internas con 16px.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Escribir los títulos siempre en Urbanist Bold mayúsculas, y el cuerpo siempre en Inter.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Lograr la jerarquía con el contraste entre Bold y Light.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Dejar mucho aire alrededor de títulos, fotos y tarjetas.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Usar el rojo con moderación: solo en botones y en enlaces activos o en hover.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Hacer todas las animaciones y hovers suaves, con curva ease-out.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Rellenar los recuadros y las píldoras que no son botones: píldoras en verde fuerte sobre hueso y en verde medio sobre verde fuerte.</li>
+              <li><span class="rule-icon rule-icon--yes" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Empezar el header en verde fuerte sobre el hero y pasarlo a hueso al bajar.</li>
+            </ul>
+          </div>
+          <div class="rules__col reveal">
+            <h3 class="t-card rules__title"><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No</h3>
+            <ul class="rules__list t-body" role="list">
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar degradados.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar sombras, salvo la de las tarjetas de proyecto al pasar el cursor.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No poner texto verde claro sobre hueso.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No poner rojo sobre verde fuerte.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar negro puro; el texto va en casi negro (#111111).</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar esquinas rectas.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar recuadros con solo contorno: el borde sin relleno es de los botones (las únicas excepciones son las tarjetas de proyecto sobre hueso, los marcos de imagen y los círculos vacíos de nivel).</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No poner tarjetas con borde verde sobre verde fuerte: ahí la tarjeta va rellena de hueso.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar el verde suave en píldoras: sobre hueso se pierde.</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No usar más de dos tipografías (Urbanist e Inter).</li>
+              <li><span class="rule-icon rule-icon--no" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span>No escribir «jav» ni «jv» como nombre en el CV; ahí va Javier Valencia.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img class="logo" src="assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+        <div>
+          <p class="t-card" style="color: var(--color-primary);">Javier Valencia</p>
+          <p class="t-meta">Sistema de diseño jv · DESIGN.md versión alpha</p>
+        </div>
+      </div>
+      <a class="btn btn--light" href="#inicio" data-back-to-top>Volver arriba</a>
+    </div>
+  </footer>
+
+  <div class="toast t-label" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    "use strict";
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* ---------- Menú hamburguesa ---------- */
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.getElementById("nav");
+    function setMenu(open) {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      nav.classList.toggle("is-open", open);
+    }
+    toggle.addEventListener("click", function () { setMenu(toggle.getAttribute("aria-expanded") !== "true"); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { setMenu(false); toggle.focus(); }
+    });
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", function (mq) { if (mq.matches) setMenu(false); });
+
+    /* ---------- Header con borde al hacer scroll ---------- */
+    var header = document.querySelector(".header");
+    function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
+    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+    /* ---------- Header verde sobre el hero, hueso al bajar ---------- */
+    var hero = document.getElementById("inicio");
+    if (hero && "IntersectionObserver" in window) {
+      var heroObserver = new IntersectionObserver(function (entries) {
+        header.classList.toggle("is-on-hero", entries[0].isIntersecting);
+      }, { rootMargin: "-" + header.offsetHeight + "px 0px 0px 0px", threshold: 0 });
+      heroObserver.observe(hero);
+    } else {
+      header.classList.remove("is-on-hero");
+    }
+
+    /* ---------- Volver arriba: a la portada (hero) ---------- */
+    var backToTop = document.querySelector("[data-back-to-top]");
+    if (backToTop) {
+      backToTop.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        var heroTitle = document.getElementById("hero-title");
+        if (heroTitle) heroTitle.focus({ preventScroll: true });
+      });
+    }
+
+    /* ---------- Sección activa en la navegación ---------- */
+    var links = Array.prototype.slice.call(nav.querySelectorAll(".nav-link"));
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    if ("IntersectionObserver" in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (a) { a.removeAttribute("aria-current"); });
+          var link = byId[entry.target.id];
+          if (link) link.setAttribute("aria-current", "true");
+        });
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      document.querySelectorAll("main section[id]").forEach(function (s) { spy.observe(s); });
+    }
+
+    /* ---------- Copiar colores ---------- */
+    var toast = document.getElementById("toast");
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("is-visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove("is-visible"); }, 1800);
+    }
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+      return new Promise(function (resolve, reject) {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy") ? resolve() : reject(); } catch (err) { reject(err); }
+        document.body.removeChild(ta);
+      });
+    }
+    document.querySelectorAll("[data-copy]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var value = btn.getAttribute("data-copy");
+        copyText(value).then(function () { showToast(value + " copiado"); }, function () { showToast("No se pudo copiar " + value); });
+      });
+    });
+
+    /* ---------- Contraste en vivo (WCAG 2.x) ---------- */
+    function luminance(hex) {
+      var n = hex.replace("#", "");
+      return [0, 2, 4].map(function (i) {
+        var c = parseInt(n.substr(i, 2), 16) / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      }).reduce(function (sum, c, i) { return sum + c * [0.2126, 0.7152, 0.0722][i]; }, 0);
+    }
+    function ratio(a, b) {
+      var l1 = luminance(a), l2 = luminance(b);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+    var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    var cross = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+    document.querySelectorAll(".pair").forEach(function (pair) {
+      var r = ratio(pair.getAttribute("data-fg"), pair.getAttribute("data-bg"));
+      var badge = pair.querySelector("[data-ratio]");
+      var value = r.toFixed(2) + ":1";
+      var label;
+      if (pair.hasAttribute("data-forbidden")) label = cross + value + " · prohibido";
+      else if (r >= 7) label = check + value + " · AAA";
+      else if (r >= 4.5) label = check + value + " · AA";
+      else if (pair.hasAttribute("data-large") && r >= 3) label = check + value + " · AA grande";
+      else label = cross + value;
+      badge.innerHTML = label;
+    });
+
+    /* ---------- Escala: computadora / celular ---------- */
+    var scale = document.getElementById("scale");
+    var modeButtons = document.querySelectorAll(".segmented [data-mode]");
+    function setMode(mode) {
+      scale.setAttribute("data-mode", mode);
+      modeButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === mode)); });
+      scale.querySelectorAll(".size-value").forEach(function (s) {
+        s.textContent = s.getAttribute(mode === "mobile" ? "data-m" : "data-d");
+      });
+    }
+    modeButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () { setMode(btn.getAttribute("data-mode")); });
+    });
+    /* En pantallas de celular se empieza mostrando los tamaños de celular */
+    if (window.matchMedia("(max-width: 767px)").matches) setMode("mobile");
+
+    /* ---------- Aparición suave al hacer scroll ---------- */
+    var reveals = document.querySelectorAll(".reveal");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      reveals.forEach(function (el) { el.classList.add("is-in"); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+      reveals.forEach(function (el) { io.observe(el); });
+    }
+  })();
+  </script>
+</body>
+</html>

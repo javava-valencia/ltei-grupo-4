@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dunkin’ · Javier Valencia</title>
+  <meta name="description" content="Prototipo de landing page para Dunkin’. UX/UI. Proyecto de Javier Valencia, diseñador gráfico.">
+  <meta name="theme-color" content="#FFF8EB">
+  <link rel="icon" type="image/png" href="../assets/img/logo-jv-oscuro.png">
+  <link rel="preload" href="../assets/fonts/Urbanist-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/proyecto.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Javier Valencia: ir al inicio">
+        <img class="logo" src="../assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Secciones">
+        <ul class="nav__list" role="list">
+          <li><a class="nav-link t-label" href="../index.html#inicio">Inicio</a></li>
+          <li><a class="nav-link t-label" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav-link t-label" href="../index.html#proyectos" aria-current="true">Proyectos</a></li>
+          <li><a class="nav-link t-label" href="../index.html#experiencia">Experiencia</a></li>
+          <li><a class="nav-link t-label" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <article class="project container" aria-labelledby="project-title">
+      <a class="back-link t-label" href="../index.html#proyectos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Volver a proyectos</a>
+
+      <header class="project__head reveal">
+        <p class="t-label project__area">UX/UI</p>
+        <h1 class="t-heading project__title" id="project-title" tabindex="-1">Prototipo de landing page para Dunkin’</h1>
+      </header>
+
+      <div class="project__info reveal">
+        <div class="project__desc">
+            <p class="t-body pending">Descripción en preparación.</p>
+        </div>
+        <aside class="box" aria-labelledby="software-title">
+          <h2 class="t-card box__title" id="software-title">Softwares</h2>
+          <ul class="tags" role="list"><li class="tag t-label">Illustrator</li><li class="tag t-label">Figma</li><li class="tag t-label">Visual Studio Code</li></ul>
+        </aside>
+      </div>
+
+      <section class="gallery reveal" aria-labelledby="gallery-title">
+        <div class="gallery__bar">
+          <h2 class="t-card gallery__title" id="gallery-title">Galería</h2>
+          <div class="gallery__controls">
+            <button class="btn-round" type="button" data-gallery-prev aria-label="Imagen anterior" aria-controls="gallery-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <span class="t-label gallery__count" aria-live="polite">1 / 2</span>
+            <button class="btn-round" type="button" data-gallery-next aria-label="Imagen siguiente" aria-controls="gallery-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <ul class="gallery__track" id="gallery-track" role="list" tabindex="0" aria-label="Galería de Dunkin’: desliza o usa las flechas">
+          <li class="gallery__item">
+            <button class="gallery__open" type="button" aria-label="Ampliar imagen 1 de 2: Parte superior de la landing de Dunkin’: portada «Tu dulce momento de placer», donas favoritas y programa de recompensas">
+              <img class="gallery__img" src="../assets/img/web/dunkin/01.png" alt="Parte superior de la landing de Dunkin’: portada «Tu dulce momento de placer», donas favoritas y programa de recompensas" width="1226" height="2400" loading="eager">
+            </button>
+          </li>
+          <li class="gallery__item">
+            <button class="gallery__open" type="button" aria-label="Ampliar imagen 2 de 2: Parte inferior de la landing: reseñas de clientes, «¡Haz de tu día un dulce momento!» y pie de página">
+              <img class="gallery__img" src="../assets/img/web/dunkin/02.png" alt="Parte inferior de la landing: reseñas de clientes, «¡Haz de tu día un dulce momento!» y pie de página" width="1518" height="1800" loading="lazy">
+            </button>
+          </li>
+        </ul>
+        <p class="t-meta gallery__hint">Desliza hacia los lados o usa las flechas. Toca una imagen para verla en grande.</p>
+      </section>
+
+      <dialog class="viewer on-dark" id="viewer" aria-label="Visor de imágenes de Dunkin’">
+        <div class="viewer__inner">
+          <div class="viewer__bar">
+            <span class="t-label viewer__count" aria-live="polite"></span>
+            <div class="viewer__controls">
+              <button class="btn-round btn-round--dark" type="button" data-viewer-prev aria-label="Imagen anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button class="btn-round btn-round--dark" type="button" data-viewer-next aria-label="Imagen siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              <button class="btn-round btn-round--dark" type="button" data-viewer-close aria-label="Cerrar visor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            </div>
+          </div>
+          <div class="viewer__stage">
+            <figure>
+              <img class="viewer__img" alt="">
+              <figcaption class="t-meta viewer__caption"></figcaption>
+            </figure>
+          </div>
+        </div>
+      </dialog>
+
+      <nav class="next reveal" aria-label="Siguiente proyecto">
+        <div>
+          <p class="t-label next__label">Siguiente proyecto</p>
+          <p class="t-card next__title">Prozine</p>
+        </div>
+        <a class="btn btn--light" href="prozine.html">Ver proyecto<span class="sr-only">: Prozine</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer on-dark">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img class="logo" src="../assets/img/logo-jv-claro.png" alt="" width="524" height="755">
+        <div>
+          <p class="t-card">Javier Valencia</p>
+          <p class="t-meta footer__meta">Diseñador gráfico · <span id="year">2026</span></p>
+        </div>
+      </div>
+      <a class="btn btn--dark" href="#contenido" data-back-to-top>Volver arriba</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/proyecto.js" defer></script>
+</body>
+</html>

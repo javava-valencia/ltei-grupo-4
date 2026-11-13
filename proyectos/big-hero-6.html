@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Big Hero 6 · Javier Valencia</title>
+  <meta name="description" content="Animación 2D para los créditos de Big Hero 6. Animación. Proyecto de Javier Valencia, diseñador gráfico.">
+  <meta name="theme-color" content="#FFF8EB">
+  <link rel="icon" type="image/png" href="../assets/img/logo-jv-oscuro.png">
+  <link rel="preload" href="../assets/fonts/Urbanist-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/proyecto.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Javier Valencia: ir al inicio">
+        <img class="logo" src="../assets/img/logo-jv-oscuro.png" alt="" width="524" height="755">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Secciones">
+        <ul class="nav__list" role="list">
+          <li><a class="nav-link t-label" href="../index.html#inicio">Inicio</a></li>
+          <li><a class="nav-link t-label" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav-link t-label" href="../index.html#proyectos" aria-current="true">Proyectos</a></li>
+          <li><a class="nav-link t-label" href="../index.html#experiencia">Experiencia</a></li>
+          <li><a class="nav-link t-label" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <article class="project container" aria-labelledby="project-title">
+      <a class="back-link t-label" href="../index.html#proyectos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Volver a proyectos</a>
+
+      <header class="project__head reveal">
+        <p class="t-label project__area">Animación</p>
+        <h1 class="t-heading project__title" id="project-title" tabindex="-1">Animación 2D para los créditos de Big Hero 6</h1>
+      </header>
+
+      <div class="project__info reveal">
+        <div class="project__desc">
+            <p class="t-body pending">Descripción en preparación.</p>
+            <p><a class="btn btn--light" href="https://youtu.be/tIIzO6nC3mo?si=HLCmwVGLd2eByrEu" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>Ver video<span class="sr-only"> (se abre en una pestaña nueva)</span></a></p>
+        </div>
+        <aside class="box" aria-labelledby="software-title">
+          <h2 class="t-card box__title" id="software-title">Softwares</h2>
+          <ul class="tags" role="list"><li class="tag t-label">Illustrator</li><li class="tag t-label">After Effects</li></ul>
+        </aside>
+      </div>
+
+      <figure class="feature reveal">
+        <img src="../assets/img/web/logos/big-hero-6.png" alt="Logotipo de Big Hero 6" width="900" height="315">
+      </figure>
+
+      <nav class="next reveal" aria-label="Siguiente proyecto">
+        <div>
+          <p class="t-label next__label">Siguiente proyecto</p>
+          <p class="t-card next__title">Kroxi</p>
+        </div>
+        <a class="btn btn--light" href="kroxi.html">Ver proyecto<span class="sr-only">: Kroxi</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer on-dark">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img class="logo" src="../assets/img/logo-jv-claro.png" alt="" width="524" height="755">
+        <div>
+          <p class="t-card">Javier Valencia</p>
+          <p class="t-meta footer__meta">Diseñador gráfico · <span id="year">2026</span></p>
+        </div>
+      </div>
+      <a class="btn btn--dark" href="#contenido" data-back-to-top>Volver arriba</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/proyecto.js" defer></script>
+</body>
+</html>
