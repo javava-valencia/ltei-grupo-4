@@ -3,7 +3,6 @@
 > Arquitectura de información, diseño y contenido de la landing del CV ([index.html](index.html)) y de las páginas de proyecto ([proyectos/](proyectos/)).
 > Fuente original: «Arquitectura - CV.docx», actualizada con las decisiones tomadas al construir el sitio.
 > El diseño visual se rige por [DESIGN.md](DESIGN.md); aquí se describe qué va en cada página y cómo se organiza.
-> Los textos marcados con **⚠️ PENDIENTE** todavía no existen y se completarán después.
 
 ---
 
@@ -137,7 +136,7 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/air-canada.html`
 - **Área:** UX/UI
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Diseñé el prototipo de una aplicación para Air Canada pensada en un usuario específico. La app reúne en un solo lugar la reserva de vuelos, el check-in, el pase de abordar digital y herramientas para el viaje, como mapas del aeropuerto y wifi, con una navegación clara y la identidad de la aerolínea.
 - **Softwares:** Figma, Illustrator, Pexels
 - **Galería:** 6 pantallas de la app.
 
@@ -145,7 +144,7 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/dunkin.html`
 - **Área:** UX/UI
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Diseñé y codifiqué el prototipo de una landing page para renovar la imagen web de Dunkin’, pensada en un usuario específico. La página presenta las donas favoritas, el programa de recompensas y las reseñas de clientes con una estética divertida y apetitosa. Además, fue un ejercicio para aprender a codificar en HTML con Visual Studio Code.
 - **Softwares:** Illustrator, Figma, Visual Studio Code
 - **Galería:** 2 imágenes (parte superior e inferior de la landing).
 
@@ -153,7 +152,7 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/prozine.html`
 - **Área:** Diseño editorial
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Proyecto editorial en el que diseñé «gen-rev», una revista que muestra cómo Mercedes-Benz ha evolucionado a través de las generaciones. Cada sección retrata una generación, como los Baby Boomers, con sus autos y su contexto, en una maquetación sobria y elegante en blanco y negro.
 - **Softwares:** InDesign
 - **Galería:** 3 imágenes de la revista.
 
@@ -161,7 +160,7 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/jarritos.html`
 - **Área:** Ilustración digital / Identidad gráfica
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Propuesta de una nueva línea de sabores para Jarritos inspirada en la Selva Mexicana. Cada sabor se representa con un animal de la selva: una serpiente para mango kiwi, una guacamaya para fresa sandía y un tucán para naranja piña, ilustrados digitalmente junto con la fruta y la vegetación.
 - **Softwares:** Photoshop, Illustrator
 - **Galería:** 3 latas (mango kiwi, fresa sandía y naranja piña).
 
@@ -169,7 +168,7 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/quest.html`
 - **Área:** Identidad gráfica
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Rediseño de la identidad gráfica de Laboratorios Quest para modernizar la marca. Desarrollé un nuevo logotipo y lo apliqué en distintas piezas, con un sistema visual verde y limpio que se reconoce en cada una.
 - **Softwares:** Illustrator
 - **Piezas:** app, sitio web, espectacular, bolsa, tarjeta y folder.
 - **Galería:** 7 imágenes (logotipo y piezas).
@@ -178,8 +177,9 @@ La sección más importante del portafolio, con fondo verde fuerte.
 
 - **Página:** `proyectos/big-hero-6.html`
 - **Área:** Animación
-- **Descripción:** ⚠️ PENDIENTE
+- **Descripción:** Proyecto en equipo en el que animamos en 2D una nueva versión de los créditos de Big Hero 6. Fue un ejercicio de animación para aprender a dar movimiento a ilustraciones y tipografía en After Effects, a partir de piezas creadas en Illustrator.
 - **Softwares:** Illustrator, After Effects
+- **Trabajo:** en equipo
 - **Enlace al video:** <https://youtu.be/tIIzO6nC3mo?si=HLCmwVGLd2eByrEu> (botón «Ver video», solo en la página del proyecto)
 - **Galería:** no tiene; en su lugar se muestra el logo en un marco.
 
@@ -191,7 +191,7 @@ Cada proyecto tiene su propia página, sobre fondo hueso, con el header fijo arr
 
 1. Arriba a la izquierda, una flecha **«← Volver a proyectos»** que regresa a la sección Proyectos de la página principal.
 2. El **área** como texto pequeño y, debajo, el **título del proyecto** en Urbanist Bold mayúsculas, verde fuerte. Si hay reconocimiento, va como etiqueta debajo del título.
-3. La **descripción** a la izquierda y un recuadro con los **softwares** (como etiquetas) a la derecha; en celular, uno debajo del otro. Mientras falte la descripción, se lee «Descripción en preparación.».
+3. La **descripción** a la izquierda y un recuadro con los **softwares** (como etiquetas) a la derecha; en celular, uno debajo del otro.
 4. Si el proyecto tiene un **enlace extra** (como el video de la animación), va debajo de la descripción como botón píldora con borde rojo.
 5. Una **galería de imágenes** con esquinas redondeadas, directo sobre el hueso, que se recorre deslizando hacia los lados (scroll horizontal), con flechas y contador. Las piezas se ven a una escala parecida (las imágenes transparentes van sin márgenes vacíos y los logotipos con aire alrededor).
 6. Al tocar una imagen se abre un **visor** a pantalla completa sobre verde fuerte, con su descripción; se recorre con flechas y se cierra con la X o con «Esc».
